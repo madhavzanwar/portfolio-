@@ -11,11 +11,12 @@
 <meta property="og:image" content="https://madhavzanwar.vercel.app/images/wall/me.jpg"><meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Madhav Zanwar","jobTitle":"Computer Science (AI & ML) student","affiliation":"Pimpri Chinchwad College of Engineering","email":"madhavzanwar13@gmail.com","sameAs":["https://github.com/madhavzanwar","https://www.linkedin.com/in/madhav-zanwar-395ba1389/","https://leetcode.com/u/madhav_builds/"]}</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23FFD1C4'/><text x='50%' y='56%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='60' fill='%2313233A'>M</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Gaegu:wght@700&family=Geist:wght@400&display=swap" rel="stylesheet">
 <script>(()=>{let t=null;try{t=localStorage.getItem('mz-theme')}catch(_){}document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')})();</script>
+<link rel="preload" href="fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/gaegu-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:400 800;font-stretch:100%;font-display:swap;src:url(fonts/bricolage-grotesque-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Gaegu';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/gaegu-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 :root{
   --canvas:#FFF8EC;--surface:#CFE7FF;--surface-alt:#FDFCF9;
   --ink:#13233A;--body:#3A2616;--muted:#2B3A4E;--faint:#4B5D72;
@@ -252,17 +253,29 @@ h2 em{font-style:normal;color:var(--sky)}
 .win .plinks{margin-top:12px}
 @media(max-width:820px){.wins{grid-template-columns:1fr}.win .place{width:60px;height:60px;font-size:20px}}
 /* wall */
-.board{position:relative;height:960px;border-radius:18px;background:var(--board);box-shadow:inset 0 0 0 2px rgba(19,35,58,.08);overflow:hidden;touch-action:pan-y}
-.board .hint{position:absolute;right:18px;bottom:12px;font:700 19px/1 Gaegu,serif;color:var(--link);pointer-events:none}
-.photo{position:absolute;left:var(--l);top:var(--t);width:var(--w,210px);padding:10px 10px 14px;background:var(--frame);border-radius:4px 4px 18px 18px;box-shadow:var(--card-shadow);cursor:grab;user-select:none;touch-action:none;transform:rotate(var(--r,0deg));transition:box-shadow .2s,transform .2s}
+.board{position:relative;height:1420px;border-radius:18px;background:#c49664 url(images/cork.jpg) center/cover;border:10px solid #8b5b33;box-shadow:inset 0 0 50px rgba(70,35,5,.5),0 26px 40px -26px rgba(0,0,0,.55);overflow:hidden;touch-action:pan-y}
+[data-theme="dark"] .board{background-color:#7a6a58;background-blend-mode:multiply;border-color:#4a3320}
+.photo{position:absolute;left:var(--l);top:var(--t);width:var(--w,210px);padding:10px 10px 14px;background:var(--frame);border-radius:4px 4px 18px 18px;box-shadow:rgba(40,20,0,.45) 0 16px 22px -12px,rgba(255,255,255,.5) 0 1px 0 inset;cursor:grab;user-select:none;touch-action:none;transform:rotate(var(--r,0deg));transition:box-shadow .2s,transform .2s}
 .photo:hover{transform:rotate(var(--r,0deg)) scale(1.04)}
-.photo.drag{cursor:grabbing;box-shadow:var(--card-shadow-hover);transform:rotate(0deg) scale(1.08);transition:none}
+.photo.drag{cursor:grabbing;box-shadow:rgba(40,20,0,.55) 0 26px 30px -14px;transform:rotate(0deg) scale(1.07);transition:none}
 .photo img{display:block;width:100%;aspect-ratio:var(--ar,3/4);object-fit:cover;border-radius:2px;pointer-events:none;-webkit-user-drag:none}
 .photo figcaption{font:700 21px/1 Gaegu,serif;color:var(--frame-ink);text-align:center;padding-top:8px;pointer-events:none}
+.photo:not(.stk)::before{content:"";position:absolute;left:50%;top:-9px;width:17px;height:17px;margin-left:-8px;border-radius:50%;background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.85),var(--pin,#e5484d) 38%,rgba(0,0,0,.35) 120%);box-shadow:0 4px 5px rgba(0,0,0,.4);z-index:3;pointer-events:none}
 .sticky.mint{background:#C9EBD2}.sticky.lav{background:#D9CCFF}.sticky.peach{background:#FFD1C4}.sticky.sky{background:#CFE7FF}.sticky.gold{background:#FFE98A}
-.sticky{position:absolute;right:-14px;top:-18px;width:100px;padding:10px 8px;background:#FFE98A;color:#13233A;font:700 19px/1 Gaegu,serif;text-align:center;transform:rotate(7deg);box-shadow:rgba(60,30,0,.4) 0 10px 14px -8px;pointer-events:none}
-.slot{position:absolute;width:var(--w,190px);aspect-ratio:3/4;border:3px dashed rgba(138,98,66,.45);border-radius:12px;display:grid;place-items:center;text-align:center;padding:12px;font:700 19px/1 Gaegu,serif;color:var(--link);transform:rotate(var(--r,0deg))}
-@media(max-width:820px){.board{height:1500px}.photo{--w:150px;left:var(--ml);top:var(--mt)}.photo[style*="--w:1"],.photo[style*="--w:2"]{--w:150px!important}.sticky{width:84px;font-size:17px;right:-2px}.board .hint{font-size:16px;right:12px;left:12px;text-align:right}}
+.sticky{position:absolute;right:-14px;top:-18px;width:100px;padding:10px 8px;background:#FFE98A;color:#13233A;font:700 19px/1 Gaegu,serif;text-align:center;transform:rotate(7deg);box-shadow:rgba(60,30,0,.4) 0 10px 14px -8px;pointer-events:none;z-index:4}
+/* notebook page */
+.photo.paper{width:var(--w,330px);padding:30px 22px 26px 44px;background:#fffdf5 repeating-linear-gradient(transparent 0 27px,rgba(70,110,200,.3) 27px 28px);background-position:0 34px;border-radius:3px 3px 14px 3px;color:#13233A;font-family:Gaegu,serif;font-weight:700;text-align:left}
+.paper::after{content:"";position:absolute;left:34px;top:0;bottom:0;width:2px;background:rgba(224,72,72,.45);pointer-events:none}
+.paper .lbl{font:700 11px 'Bricolage Grotesque',sans-serif;letter-spacing:.14em;color:#E8573A;margin-bottom:2px}
+.paper h4{font:800 25px/1.08 'Bricolage Grotesque',sans-serif;letter-spacing:-.04em;margin:0 0 10px}
+.paper h5{font:700 20px/28px Gaegu,serif;margin:6px 0 0}
+.paper ul{margin:0;padding-left:20px;font-size:17px;line-height:28px}
+.paper li{margin:0}
+/* sticky notes on the board */
+.photo.stk{width:var(--w,230px);padding:24px 18px 18px;background:var(--sk,#FFE98A);color:#13233A;border-radius:3px 3px 14px 3px;font:700 21px/1.15 Gaegu,serif}
+.stk::before{content:"";position:absolute;left:50%;top:-11px;width:78px;height:22px;transform:translateX(-50%) rotate(-2deg);background:rgba(255,255,255,.55);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.stk small{display:block;margin-top:10px;font:600 10.5px 'Bricolage Grotesque',sans-serif;letter-spacing:.1em;text-transform:uppercase;opacity:.6}
+@media(max-width:820px){.photo{--w:150px}.photo.paper{padding:26px 16px 22px 38px}.paper::after{left:30px}.paper h4{font-size:22px}.paper ul{font-size:16px}.sticky{width:84px;font-size:17px;right:-2px}.photo.stk{font-size:19px}}
 /* contact */
 .mail{display:inline-block;font-weight:800;font-size:clamp(28px,6vw,70px);line-height:.94;letter-spacing:-.05em;color:var(--ink);text-decoration:none;word-break:break-all;border-bottom:6px solid var(--peach);transition:border-color .2s}
 .mail:hover{border-color:var(--sky)}
@@ -548,15 +561,20 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
   <span class="tag reveal">the wall</span>
   <h2 class="reveal">Life outside <em>the editor</em></h2>
   <div class="board reveal" id="board">
-    <figure class="photo" tabindex="0" style="--l:3%;--t:4%;--ml:4%;--mt:1%;--r:-4deg;--ar:3/4"><img src="images/wall/pizza.jpg" alt="A wood-fired pizza with olives and basil" draggable="false"><div class="sticky ">fav food!</div><figcaption>pizza, always</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:27%;--t:7%;--ml:54%;--mt:3%;--r:3deg;--ar:3/4"><img src="images/wall/chess.jpg" alt="A chess game open on a laptop in a cafe" draggable="false"><div class="sticky mint">my hobby</div><figcaption>hobby: chess</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:50%;--t:3%;--ml:4%;--mt:24%;--r:-2deg;--ar:9/16;--w:180px"><img src="images/wall/turf.jpg" alt="A netted box-cricket turf at dusk" draggable="false"><div class="sticky lav">random pic</div><figcaption>random: the turf</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:73%;--t:6%;--ml:54%;--mt:25%;--r:2.5deg;--ar:3/4"><img src="images/wall/night.jpg" alt="Feet up over a city skyline at night" draggable="false"><div class="sticky peach">chasing views</div><figcaption>sightseeing</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:5%;--t:54%;--ml:4%;--mt:47%;--r:2deg;--ar:1/1"><img src="images/wall/college.jpg" alt="A pink sunset sky over the college buildings" draggable="false"><div class="sticky sky">college</div><figcaption>college, golden hour</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:28%;--t:50%;--ml:54%;--mt:47%;--r:-3deg;--ar:9/16;--w:190px"><img src="images/wall/badminton.jpg" alt="Madhav leaping to smash during a badminton game" draggable="false"><div class="sticky ">fav sport!!</div><figcaption>badminton</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:50%;--t:54%;--ml:4%;--mt:69%;--r:3deg;--ar:3/4;--w:230px"><img src="images/wall/me.jpg" alt="Madhav in a brown jacket against a brick wall" draggable="false"><figcaption>me</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:74%;--t:55%;--ml:54%;--mt:70%;--r:-2deg;--ar:3/4"><img src="images/wall/food.jpg" alt="A loaded dahi chaat with a mango lassi" draggable="false"><div class="sticky gold">chaat &gt; everything</div><figcaption>foodie</figcaption></figure>
-    <div class="hint">drag me around (or focus + arrow keys) →</div>
+    <figure class="photo" tabindex="0" style="--l:3%;--t:30px;--r:-4deg;--w:230px;--ar:3/4;--pin:#e5484d"><img src="images/wall/me.jpg" alt="Madhav smiling with his arms crossed in front of a hand-drawn mural" draggable="false"><figcaption>me, pretending I have a plan</figcaption></figure>
+    <figure class="photo paper" tabindex="0" style="--l:25%;--t:22px;--r:1deg;--w:340px;--pin:#e5484d"><div class="lbl">OFF THE CLOCK</div><h4>Hi, I'm Madhav. Not the coding version.</h4><h5>Things I can't stop doing</h5><ul><li>Solving one LeetCode a day</li><li>Not listening to music while bathing</li><li>Saying "just one more video" and accidentally watching a whole documentary</li></ul><h5>When I'm not studying</h5><ul><li>Trying out new cafes :)</li><li>Watching standup comedy</li><li>Playing chess and blaming my losses on everything except my strategy</li></ul></figure>
+    <figure class="photo" tabindex="0" style="--l:54%;--t:48px;--r:2.5deg;--w:262px;--ar:735/467;--pin:#3b82f6"><img src="images/wall/palace.jpg" alt="Carved sandstone arches framing a pink palace courtyard" draggable="false"><figcaption>arches I could stare at all day</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:78%;--t:26px;--r:-3deg;--w:210px;--ar:3/4;--pin:#f5b301"><img src="images/wall/pizza.jpg" alt="A wood-fired pizza with olives and basil" draggable="false"><div class="sticky">fav food!</div><figcaption>pizza, always</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:3%;--t:565px;--r:3deg;--w:190px;--ar:736/1308;--pin:#2fa56b"><img src="images/wall/bonfire.jpg" alt="Friends gathered around a bonfire at night while someone plays guitar" draggable="false"><figcaption>guitar, fire and off-key singing</figcaption></figure>
+    <div class="photo stk" tabindex="0" style="--l:23%;--t:550px;--r:-2.5deg;--w:235px;--sk:#FFE98A">Plot twist: I'm not like most people. Most people love bhindi and dogs. I dislike both, and honestly I have no idea why.<small>unpopular opinion</small></div>
+    <figure class="photo" tabindex="0" style="--l:42%;--t:545px;--r:2deg;--w:210px;--ar:3/4;--pin:#e5484d"><img src="images/wall/chess.jpg" alt="A chess game open on a laptop in a cafe" draggable="false"><div class="sticky mint">my hobby</div><figcaption>hobby: chess</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:63%;--t:565px;--r:-2deg;--w:170px;--ar:9/16;--pin:#3b82f6"><img src="images/wall/turf.jpg" alt="A netted box-cricket turf at dusk" draggable="false"><div class="sticky lav">random pic</div><figcaption>random: the turf</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:81%;--t:570px;--r:2.5deg;--w:200px;--ar:3/4;--pin:#f5b301"><img src="images/wall/night.jpg" alt="Feet up over a city skyline at night" draggable="false"><div class="sticky peach">chasing views</div><figcaption>sightseeing</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:23%;--t:815px;--r:2deg;--w:210px;--ar:1/1;--pin:#2fa56b"><img src="images/wall/college.jpg" alt="A pink sunset sky over the college buildings" draggable="false"><div class="sticky sky">college</div><figcaption>college, golden hour</figcaption></figure>
+    <div class="photo stk" tabindex="0" style="--l:3%;--t:1020px;--r:2deg;--w:230px;--sk:#D9CCFF">You'll never be bored of my company. I'm always cracking some silly jokes, hehe<small>warning: puns</small></div>
+    <figure class="photo" tabindex="0" style="--l:44%;--t:925px;--r:-3deg;--w:185px;--ar:9/16;--pin:#e5484d"><img src="images/wall/badminton.jpg" alt="Madhav leaping to smash during a badminton game" draggable="false"><div class="sticky">fav sport!!</div><figcaption>badminton</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:65%;--t:930px;--r:2deg;--w:215px;--ar:3/4;--pin:#3b82f6"><img src="images/wall/food.jpg" alt="A loaded dahi chaat with a mango lassi" draggable="false"><div class="sticky gold">chaat &gt; everything</div><figcaption>foodie</figcaption></figure>
+    <div class="photo stk" tabindex="0" style="--l:80%;--t:1235px;--r:-4deg;--w:190px;--sk:#C9EBD2">my wall, your hands. Drag anything around :)<small>go on</small></div>
   </div>
 </section>
 
@@ -926,24 +944,39 @@ window.__z=20;
   addEventListener('resize',()=>notes.forEach(n=>{const b=baseOf(n);place(n,b.tx,b.ty,b)}));
 })();
 const board=document.getElementById('board');let z=10;
-board.querySelectorAll('.photo').forEach(el=>{
+const wallItems=[...board.querySelectorAll('.photo')],mqW=matchMedia('(max-width:1199px)');
+function layoutWall(){                                 /* wide screens: CSS positions; smaller screens: pack into 2 or 3 columns */
+  wallItems.forEach(el=>{el.style.left='';el.style.top='';el.style.width=''});board.style.height='';
+  if(!mqW.matches)return;
+  const bw=board.clientWidth,pad=14,gap=14,n=bw<=560?2:3,cw=Math.floor((bw-pad*2-gap*(n-1))/n),col=Array(n).fill(pad);
+  wallItems.forEach(el=>{
+    const wide=el.classList.contains('paper')&&n===2;el.style.width=(wide?bw-pad*2:cw)+'px';
+    const h=el.offsetHeight+gap;
+    if(wide){const y=Math.max(...col);el.style.left=pad+'px';el.style.top=y+'px';col.fill(y+h)}
+    else{const c=col.indexOf(Math.min(...col));el.style.left=(pad+c*(cw+gap))+'px';el.style.top=col[c]+'px';col[c]+=h}
+  });
+  board.style.height=(Math.max(...col)+pad+10)+'px';
+}
+wallItems.forEach(el=>{
   el.addEventListener('pointerdown',e=>{
     e.preventDefault();el.setPointerCapture(e.pointerId);
     const b=board.getBoundingClientRect(),r=el.getBoundingClientRect();
     const dx=e.clientX-r.left,dy=e.clientY-r.top;
     el.style.zIndex=++z;el.classList.add('drag');
     const mv=ev=>{
-      const x=Math.min(Math.max(ev.clientX-b.left-dx,0),b.width-el.offsetWidth);
-      const y=Math.min(Math.max(ev.clientY-b.top-dy,0),b.height-el.offsetHeight);
+      const x=Math.min(Math.max(ev.clientX-b.left-dx,0),board.clientWidth-el.offsetWidth);
+      const y=Math.min(Math.max(ev.clientY-b.top-dy,0),board.clientHeight-el.offsetHeight);
       el.style.left=x+'px';el.style.top=y+'px';};
     const up=()=>{el.classList.remove('drag');el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up)};
     el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
   });
+  el.addEventListener('keydown',e=>{
+    const d={ArrowLeft:[-20,0],ArrowRight:[20,0],ArrowUp:[0,-20],ArrowDown:[0,20]}[e.key];if(!d)return;e.preventDefault();
+    const x=Math.min(Math.max(el.offsetLeft+d[0],0),board.clientWidth-el.offsetWidth),y=Math.min(Math.max(el.offsetTop+d[1],0),board.clientHeight-el.offsetHeight);
+    el.style.left=x+'px';el.style.top=y+'px';el.style.zIndex=++z;});
 });
-board.querySelectorAll('.photo').forEach(el=>el.addEventListener('keydown',e=>{
-  const d={ArrowLeft:[-20,0],ArrowRight:[20,0],ArrowUp:[0,-20],ArrowDown:[0,20]}[e.key];if(!d)return;e.preventDefault();
-  const x=Math.min(Math.max(el.offsetLeft+d[0],0),board.clientWidth-el.offsetWidth),y=Math.min(Math.max(el.offsetTop+d[1],0),board.clientHeight-el.offsetHeight);
-  el.style.left=x+'px';el.style.top=y+'px';el.style.zIndex=++z;}));
+layoutWall();mqW.addEventListener('change',layoutWall);addEventListener('resize',()=>{if(mqW.matches)layoutWall()});addEventListener('load',layoutWall);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layoutWall);
 const dial=document.getElementById('dial'),plus=document.getElementById('plus'),reduceM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 addEventListener('scroll',()=>{const show=scrollY>600;dial.classList.toggle('show',show);if(!show&&dial.classList.contains('open'))closeDial()},{passive:true});
 function closeDial(){dial.classList.remove('open');plus.setAttribute('aria-expanded','false');plus.setAttribute('aria-label','Open quick menu')}

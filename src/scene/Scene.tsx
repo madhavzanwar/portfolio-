@@ -4,10 +4,9 @@ import { useGLTF } from '@react-three/drei'
 import { EffectComposer, Bloom, DepthOfField, SMAA } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import Env from './Env'
-import { attachAvatar } from './avatar'
 import { FOCUS_POINTS, FRAMES_PER_NODE } from '../data/focusPoints'
 
-useGLTF.preload(`${import.meta.env.BASE_URL}models/rig.glb`)
+useGLTF.preload(`${import.meta.env.BASE_URL}models/me.glb`)
 
 // 聚焦锚点（glb 内 focus-* 空对象），顺序对应履历节点；名单是唯一真源，见 data/focusPoints.ts
 const POINTS = FOCUS_POINTS as readonly string[]
@@ -147,12 +146,11 @@ function Man2({
   }
 
   const get = useThree((s) => s.get)
-  const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}models/rig.glb`)
+  const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}models/me.glb`)
 
   // 克隆模型；收集眼睛对象、聚焦锚点对象、glb 自带相机、各锚点景深开关
   const { model, eyes, points, startPoint, glbCam, focusNode, dof } = useMemo(() => {
     const clone = scene.clone(true)
-    attachAvatar(clone) // avatar is built in code and parented to the animated `man` node
     const eyes: any[] = []
     const pmap: Record<string, any> = {}
     let startPoint: any = null

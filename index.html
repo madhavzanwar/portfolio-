@@ -87,15 +87,15 @@ body,nav,.card,.cert,.btn,.photo,.board,.tabs{transition-property:background-col
 .scrollhint i{display:block;width:2px;height:28px;background:var(--link);animation:drop 1.6s ease-in-out infinite;transform-origin:top}
 @keyframes drop{0%{transform:scaleY(0)}60%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
 /* notes: they appear one by one as you scroll, then you can drag them */
-.notes{position:relative;height:min(560px,70vh)}
-.note{position:absolute;width:min(270px,78%);padding:26px 22px 20px;color:#13233A;font:700 24px/1.12 Gaegu,serif;cursor:grab;user-select:none;touch-action:none;box-shadow:rgba(60,30,0,.4) 0 20px 26px -16px,rgba(255,255,255,.5) 0 1px 0 inset;border-radius:3px 3px 14px 3px;opacity:0;transform:translate(var(--tx,0px),calc(var(--ty,0px) + 40px)) rotate(calc(var(--r,0deg) - 8deg)) scale(.7);pointer-events:none;transition:opacity .45s,transform .6s cubic-bezier(.3,1.5,.5,1),box-shadow .2s}
+.notes{position:relative;height:min(580px,74vh)}
+.note{position:absolute;width:min(250px,76%);padding:24px 18px 16px;color:#13233A;font:700 21px/1.1 Gaegu,serif;cursor:grab;user-select:none;touch-action:none;box-shadow:rgba(60,30,0,.4) 0 20px 26px -16px,rgba(255,255,255,.5) 0 1px 0 inset;border-radius:3px 3px 14px 3px;opacity:0;transform:translate(var(--tx,0px),calc(var(--ty,0px) + 40px)) rotate(calc(var(--r,0deg) - 8deg)) scale(.7);pointer-events:none;transition:opacity .45s,transform .6s cubic-bezier(.3,1.5,.5,1),box-shadow .2s}
 .note.on{opacity:1;transform:translate(var(--tx,0px),var(--ty,0px)) rotate(var(--r,0deg)) scale(1);pointer-events:auto}
 .note::before{content:"";position:absolute;left:50%;top:-12px;width:84px;height:24px;transform:translateX(-50%) rotate(-2deg);background:rgba(255,255,255,.55);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .note small{display:block;margin-top:10px;font:600 10.5px 'JetBrains Mono','Geist',monospace;letter-spacing:.1em;text-transform:uppercase;opacity:.6}
 .note.drag{cursor:grabbing;box-shadow:rgba(60,30,0,.45) 0 30px 34px -16px;z-index:9;transition:opacity .45s,box-shadow .2s}
 .note:hover:not(.drag){box-shadow:rgba(60,30,0,.5) 0 26px 30px -16px}
 .note .chips span{background:rgba(255,255,255,.75);font:700 13px 'Bricolage Grotesque'}
-.n1{background:#FFE98A;left:14%;top:2%;--r:3deg}.n2{background:#FFD1C4;left:2%;top:36%;--r:-3deg}.n3{background:#CFE7FF;left:20%;top:68%;--r:-2deg;width:min(250px,76%)}
+.n1{background:#FFE98A;left:16%;top:0%;--r:3deg}.n2{background:#FFD1C4;left:2%;top:28%;--r:-3deg}.n3{background:#C9EBD2;left:26%;top:52%;--r:2.5deg;width:min(230px,72%)}.n4{background:#CFE7FF;left:6%;top:76%;--r:-2deg;width:min(240px,74%)}
 .notehint{position:absolute;left:-8%;top:-9%;z-index:2;background:var(--glass-2);color:var(--ink);padding:8px 14px;border-radius:var(--pill);font:600 14px 'Bricolage Grotesque';box-shadow:var(--btn-shadow);transform:rotate(-3deg) scale(.8);opacity:0;white-space:nowrap;display:flex;align-items:center;gap:6px;pointer-events:none;transition:opacity .4s .3s,transform .5s .3s cubic-bezier(.3,1.5,.5,1)}
 .notehint.on{opacity:1;transform:rotate(-3deg) scale(1)}
 .notehint svg{width:28px;height:16px;fill:none;stroke:#F2555D;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
@@ -105,9 +105,9 @@ body,nav,.card,.cert,.btn,.photo,.board,.tabs{transition-property:background-col
   .hero{align-items:flex-start;padding-top:92px}
   .hero-in{grid-template-columns:1fr;gap:16px}
   .hero-h{font-size:clamp(25px,min(7.2vw,4.6vh),44px)}
-  .notes{height:250px;margin-top:4px}
+  .notes{height:350px;margin-top:4px}
   .note{font-size:18px;padding:20px 14px 14px;width:min(180px,50%)}
-  .n1{left:1%;top:4%}.n2{left:46%;top:28%}.n3{left:6%;top:62%;width:min(210px,60%)}
+  .n1{left:1%;top:0%}.n2{left:47%;top:15%}.n3{left:3%;top:44%;width:min(190px,54%)}.n4{left:44%;top:66%;width:min(200px,54%)}
   .notehint{left:auto;right:0;top:-18px}
 }
 @media(prefers-reduced-motion:reduce){.scrollhint i{animation:none}.note,.notehint{transition:none}}
@@ -380,7 +380,7 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
 </nav></div>
 
 <button class="musicbtn" id="musicBtn" type="button" aria-pressed="false" aria-label="Play background music"><span class="disc" aria-hidden="true"></span><span class="mtxt" id="musicTxt">Play music</span><svg class="play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z"/></svg><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></button>
-<button class="sfxbtn" id="sfxBtn" type="button" aria-pressed="true" aria-label="Turn click sounds off"><svg class="on" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></svg></button>
+<button class="sfxbtn" id="sfxBtn" type="button" aria-pressed="true" aria-label="Turn touch sounds off"><svg class="on" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></svg></button>
 <main class="wrap" id="main">
 <section id="home" class="hero-wrap" aria-label="Introduction">
   <div class="hero hl-vars" id="hero">
@@ -388,15 +388,16 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
       <div class="tell-col">
         <p class="kicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>How I got here</p>
         <div class="tell-box" id="tellBox">
-          <h1 class="hero-h" id="heroH">I'm Madhav, an <span class="mk mk-sky" data-s=".04" data-e=".2">AI/ML Engineer<span class="spark" data-s=".04" data-e=".2"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span></span> in the making. I started out curious about <span class="nw" data-dd="circle" data-s=".22" data-e=".38">how machines learn</span>, then got way more curious about <span class="mk mk-yel" data-s=".4" data-e=".56">why they work</span>. So I built a sketch-reading <span class="mk mk-peach" data-dd="stars" data-s=".58" data-e=".7">CNN</span>, and I've been chasing the <span class="mk mk-lav nw" data-dd="scribble" data-s=".72" data-e=".9">"it actually works!"</span> moments ever since.</h1>
+          <h1 class="hero-h" id="heroH">I'm Madhav, an <span class="mk mk-sky" data-s=".04" data-e=".2">AI/ML Engineer<span class="spark" data-s=".04" data-e=".2"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span></span> in the making. I started out curious about <span class="nw" data-dd="circle" data-s=".22" data-e=".38">how things work</span>, then got way more curious about <span class="mk mk-yel" data-s=".4" data-e=".56">why people love them</span>. So I <span class="mk mk-peach nw" data-dd="stars" data-s=".58" data-e=".7">kept building</span>, and I'm still chasing the <span class="mk mk-lav nw" data-dd="scribble" data-s=".72" data-e=".9">"it actually works!"</span> moments.</h1>
           <svg class="doodles" id="doodles" aria-hidden="true"></svg>
         </div>
       </div>
       <div class="notes" id="notes">
         <div class="notehint" id="noteHint"><span>these notes move ;)</span><svg viewBox="0 0 28 16"><path d="M2 12C8 2 18 2 25 9M25 9l-6-1M25 9l-1 6"/></svg></div>
-        <div class="note n1" data-at=".26">Competitive programmer. 300+ LeetCode problems and counting.<small>Problem solving</small></div>
-        <div class="note n2" data-at=".5">A 392K-parameter CNN that hits 95.6% accuracy at sketch recognition.<small>QuickSketch</small></div>
-        <div class="note n3" data-at=".76">I've worked with<div class="chips"><span>GDGC PCCoE</span><span>PCCOE</span><span>She Can</span></div></div>
+        <div class="note n1" data-at=".24">Competitive programmer. 350+ LeetCode problems and counting.<small>Problem solving</small></div>
+        <div class="note n2" data-at=".46">Contributing to open source with CNCF and Alaska organizations.<small>Open source</small></div>
+        <div class="note n3" data-at=".66">I'm looking for internships :)<small>Open to work</small></div>
+        <div class="note n4" data-at=".84">I've worked with<div class="chips"><span>GDGC PCCoE</span><span>PCCOE</span><span>She Can</span></div></div>
       </div>
     </div>
     <div class="scrollhint" aria-hidden="true"><i></i>scroll to see me highlight things</div>
@@ -414,7 +415,7 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
   </div>
   <div class="stats">
     <div class="card stat c-gold tilt1 reveal"><b>95.6%</b><span>validation accuracy on my QuickSketch CNN</span></div>
-    <div class="card stat c-mint tilt2 reveal"><b>300+</b><span>LeetCode problems solved</span></div>
+    <div class="card stat c-mint tilt2 reveal"><b>350+</b><span>LeetCode problems solved</span></div>
     <div class="card stat c-peach tilt3 reveal"><b>8.32</b><span>CGPA, B.Tech CS (AI &amp; ML)</span></div>
     <div class="card stat c-lav tilt2 reveal"><b>3</b><span>roles &amp; internships this year</span></div>
   </div>
@@ -666,81 +667,120 @@ const STOPS=[
 
 
 
-/* audio: original generative ambient music + soft UI sounds (Web Audio, no files) */
+/* audio: original lo-fi music + cute touch sounds (Web Audio, no files) */
 (function(){
-  let ctx,master,sfxBus,musicBus,echo,timer,next=0,step=0,musicOn=false,sfxOn=true;
+  let ctx,master,sfxBus,musicBus,verb,echo,wob,timer,next=0,step=0,musicOn=false,sfxOn=true,crackle;
   try{sfxOn=localStorage.getItem('mz-sfx')!=='off'}catch(_){}
   const mb=document.getElementById('musicBtn'),mt=document.getElementById('musicTxt'),sb=document.getElementById('sfxBtn');
-  const hz=n=>440*Math.pow(2,(n-69)/12);
-  const CH=[[65,69,72,76],[64,67,71,74],[62,65,69,72],[60,64,67,71]]; /* Fmaj7 Em7 Dm7 Cmaj7 */
-  const SP=60/72/2; /* eighth note at 72 bpm */
+  const hz=n=>440*Math.pow(2,(n-69)/12),BPM=74,E=60/BPM/2,SW=.07;      /* eighth note + gentle swing */
+  /* Dm9 - G9 - Cmaj9 - Am9, soft jazzy voicings (MIDI) */
+  const BASS=[38,43,36,45];
+  const CH=[[53,57,60,64],[53,59,62,69],[52,59,62,67],[55,59,60,64]];
+  const PENT=[62,65,67,69,72,74,77,79];                               /* D minor pentatonic for the little melody */
+  const CUTE=[784,880,988,1175,1319,1568];                            /* pentatonic blips for touch sounds */
+  function impulse(sec){
+    const n=Math.floor(ctx.sampleRate*sec),b=ctx.createBuffer(2,n,ctx.sampleRate);
+    for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6)}
+    return b;
+  }
   function init(){
     if(ctx)return true;
     const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;
-    ctx=new AC();master=ctx.createGain();master.gain.value=.9;master.connect(ctx.destination);
-    sfxBus=ctx.createGain();sfxBus.gain.value=.55;sfxBus.connect(master);
+    ctx=new AC();
+    const comp=ctx.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=4;comp.attack.value=.01;comp.release.value=.25;
+    master=ctx.createGain();master.gain.value=.9;master.connect(comp);comp.connect(ctx.destination);
+    verb=ctx.createConvolver();verb.buffer=impulse(2.6);const vg=ctx.createGain();vg.gain.value=.34;verb.connect(vg);vg.connect(master);
+    sfxBus=ctx.createGain();sfxBus.gain.value=.75;sfxBus.connect(master);const sv=ctx.createGain();sv.gain.value=.25;sfxBus.connect(sv);sv.connect(verb);
     musicBus=ctx.createGain();musicBus.gain.value=0;
-    const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1800;musicBus.connect(lp);lp.connect(master);
-    echo=ctx.createDelay(1);echo.delayTime.value=SP*3;const fb=ctx.createGain();fb.gain.value=.34;const ef=ctx.createBiquadFilter();ef.type='lowpass';ef.frequency.value=1400;
+    const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2300;lp.Q.value=.4;
+    const warm=ctx.createBiquadFilter();warm.type='peaking';warm.frequency.value=220;warm.gain.value=2.5;
+    musicBus.connect(warm);warm.connect(lp);lp.connect(master);lp.connect(verb);
+    echo=ctx.createDelay(1);echo.delayTime.value=E*3;const fb=ctx.createGain();fb.gain.value=.36;const ef=ctx.createBiquadFilter();ef.type='lowpass';ef.frequency.value=1500;
     echo.connect(ef);ef.connect(fb);fb.connect(echo);ef.connect(lp);
+    wob=ctx.createOscillator();wob.frequency.value=.35;const wg=ctx.createGain();wg.gain.value=9;wob.connect(wg);wob.start();
+    wobGain=wg;
     return true;
   }
-  function tone(bus,f,t,dur,type,vol,atk,send){
+  let wobGain;
+  function tone(bus,f,t,dur,type,vol,atk,send,detune){
     const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f,t);
+    if(wobGain&&detune)wobGain.connect(o.detune);
     g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(vol,t+atk);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
     o.connect(g);g.connect(bus);if(send){const s=ctx.createGain();s.gain.value=send;g.connect(s);s.connect(echo)}
     o.start(t);o.stop(t+dur+.05);return o;
   }
-  function noise(bus,t,dur,vol,freq){
+  function noise(bus,t,dur,vol,freq,type){
     const n=Math.floor(ctx.sampleRate*dur),buf=ctx.createBuffer(1,n,ctx.sampleRate),d=buf.getChannelData(0);
-    for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);
-    const src=ctx.createBufferSource();src.buffer=buf;const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=freq;const g=ctx.createGain();g.gain.value=vol;
+    for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2);
+    const src=ctx.createBufferSource();src.buffer=buf;const f=ctx.createBiquadFilter();f.type=type||'bandpass';f.frequency.value=freq;const g=ctx.createGain();g.gain.value=vol;
     src.connect(f);f.connect(g);g.connect(bus);src.start(t);
   }
+  /* soft electric-piano note: a warm sine with a quick bell overtone */
+  function keys(f,t,dur,vol){
+    tone(musicBus,f,t,dur,'sine',vol,.012,.18,true);
+    tone(musicBus,f*2,t,dur*.35,'sine',vol*.35,.006,0,true);
+    tone(musicBus,f*3.01,t,dur*.12,'sine',vol*.12,.004,0,false);
+  }
   function schedule(){
-    while(next<ctx.currentTime+.35){
-      const bar=Math.floor(step/8)%4,pos=step%8,ch=CH[bar];
-      if(pos===0){
-        ch.forEach((n,i)=>{tone(musicBus,hz(n),next,SP*8.5,'triangle',.05,1.1,0);tone(musicBus,hz(n)*1.004,next,SP*8.5,'sine',.045,1.3,0)});
-        tone(musicBus,hz(ch[0]-24),next,SP*6,'sine',.16,.08,0);
-      }
-      if(pos%2===0&&Math.random()<.78){const n=ch[Math.floor(Math.random()*4)]+12+(Math.random()<.25?12:0);tone(musicBus,hz(n),next,.9,'triangle',.055,.01,.5)}
-      if(pos%4===2)noise(musicBus,next,.05,.05,7000);
-      if(pos===4)noise(musicBus,next,.12,.035,300);
-      next+=SP;step++;
+    while(next<ctx.currentTime+.4){
+      const bar=Math.floor(step/8)%4,pos=step%8,swing=pos%2?E*SW*2:0,t=next+swing,ch=CH[bar];
+      /* chords: a lazy strum on beat 1 and a soft stab on the "and" of 3 */
+      if(pos===0){ch.forEach((n,i)=>keys(hz(n),t+i*.028,E*7.4,.05));tone(musicBus,hz(BASS[bar]),t,E*3.6,'sine',.2,.02,0)}
+      if(pos===5){ch.slice(1).forEach((n,i)=>keys(hz(n+12),t+i*.02,E*2.2,.028));tone(musicBus,hz(BASS[bar]),t,E*2.4,'sine',.15,.02,0)}
+      /* drums: soft kick, brushed snare, light hats */
+      if(pos===0||pos===5){const o=tone(musicBus,125,t,.26,'sine',.26,.003,0);o.frequency.exponentialRampToValueAtTime(42,t+.2)}
+      if(pos===2||pos===6){noise(musicBus,t,.2,.08,1700);noise(musicBus,t,.12,.05,380)}
+      if(pos%2===1||Math.random()<.35)noise(musicBus,t,.045,.022+Math.random()*.012,8500,'highpass');
+      /* sparse little melody */
+      if((pos===3||pos===7||pos===1)&&Math.random()<.42){const n=PENT[Math.floor(Math.random()*PENT.length)];tone(musicBus,hz(n),t,1.3,'triangle',.05,.01,.55,true);tone(musicBus,hz(n)*2,t,.4,'sine',.018,.005,.3,false)}
+      /* vinyl pops */
+      if(Math.random()<.18)noise(musicBus,t+Math.random()*E,.012,.05+Math.random()*.04,3500+Math.random()*3000,'highpass');
+      next+=E;step++;
     }
   }
+  function hiss(){
+    if(crackle)return;const n=ctx.sampleRate*2,b=ctx.createBuffer(1,n,ctx.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*.5;
+    crackle=ctx.createBufferSource();crackle.buffer=b;crackle.loop=true;const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=3000;f.Q.value=.3;const g=ctx.createGain();g.gain.value=.006;
+    crackle.connect(f);f.connect(g);g.connect(musicBus);crackle.start();
+  }
   function musicStart(){
-    if(!init())return;ctx.resume();musicOn=true;next=ctx.currentTime+.1;step=0;
-    musicBus.gain.cancelScheduledValues(ctx.currentTime);musicBus.gain.setValueAtTime(musicBus.gain.value,ctx.currentTime);musicBus.gain.linearRampToValueAtTime(.9,ctx.currentTime+2.5);
+    if(!init())return;ctx.resume();musicOn=true;next=ctx.currentTime+.15;step=0;hiss();
+    musicBus.gain.cancelScheduledValues(ctx.currentTime);musicBus.gain.setValueAtTime(musicBus.gain.value,ctx.currentTime);musicBus.gain.linearRampToValueAtTime(1.7,ctx.currentTime+3);
     clearInterval(timer);timer=setInterval(schedule,60);schedule();
   }
   function musicStop(){
-    musicOn=false;if(!ctx)return;musicBus.gain.cancelScheduledValues(ctx.currentTime);musicBus.gain.setValueAtTime(musicBus.gain.value,ctx.currentTime);musicBus.gain.linearRampToValueAtTime(0,ctx.currentTime+.8);
-    setTimeout(()=>{if(!musicOn)clearInterval(timer)},900);
+    musicOn=false;if(!ctx)return;musicBus.gain.cancelScheduledValues(ctx.currentTime);musicBus.gain.setValueAtTime(musicBus.gain.value,ctx.currentTime);musicBus.gain.linearRampToValueAtTime(0,ctx.currentTime+1);
+    setTimeout(()=>{if(!musicOn)clearInterval(timer)},1100);
   }
   function paint(){
     mb.setAttribute('aria-pressed',musicOn);mb.setAttribute('aria-label',musicOn?'Pause background music':'Play background music');mt.textContent=musicOn?'Music on':'Play music';
-    sb.setAttribute('aria-pressed',sfxOn);sb.setAttribute('aria-label',sfxOn?'Turn click sounds off':'Turn click sounds on');
+    sb.setAttribute('aria-pressed',sfxOn);sb.setAttribute('aria-label',sfxOn?'Turn touch sounds off':'Turn touch sounds on');
   }
+  /* cute touch sounds: little bubbly pops on a pentatonic scale, so any run of taps sounds musical */
+  function blip(t,f,vol,len){
+    const o=tone(sfxBus,f,t,len||.16,'sine',vol||.26,.004,.22,false);o.frequency.setValueAtTime(f*.82,t);o.frequency.exponentialRampToValueAtTime(f,t+.05);
+    tone(sfxBus,f*2,t,(len||.16)*.5,'sine',(vol||.26)*.22,.003,0,false);
+  }
+  let last=0;
   window.sfx=function(kind,i){
     if(!sfxOn||!init())return;if(ctx.state==='suspended')ctx.resume();const t=ctx.currentTime+.005;
     switch(kind){
-      case 'click':tone(sfxBus,820,t,.09,'sine',.22,.004,0);tone(sfxBus,1230,t+.012,.07,'sine',.1,.004,0);break;
-      case 'toggle':tone(sfxBus,600,t,.08,'triangle',.2,.004,0);tone(sfxBus,900,t+.07,.12,'triangle',.2,.004,0);break;
-      case 'shake':for(let k=0;k<5;k++)noise(sfxBus,t+k*.07,.05,.5,1800+k*200);break;
-      case 'pop':{const o=tone(sfxBus,260,t,.32,'sine',.4,.005,0);o.frequency.exponentialRampToValueAtTime(980,t+.14);noise(sfxBus,t,.18,.5,2400);tone(sfxBus,1320,t+.1,.3,'triangle',.12,.01,0.2);break}
-      case 'tool':{const sc=[523,587,659,784,880,1047,1175,1319];tone(sfxBus,sc[(i||0)%8],t,.22,'triangle',.2,.005,.2);break}
-      case 'close':{const o=tone(sfxBus,720,t,.22,'sine',.28,.005,0);o.frequency.exponentialRampToValueAtTime(260,t+.18);break}
+      case 'click':{const k=Math.floor(Math.random()*CUTE.length);blip(t,CUTE[k]);break}
+      case 'toggle':blip(t,988,.24);blip(t+.09,1319,.24);break;
+      case 'shake':for(let k=0;k<5;k++){tone(sfxBus,420+k*60,t+k*.07,.06,'triangle',.12,.003,0,false);noise(sfxBus,t+k*.07,.05,.18,2600)}break;
+      case 'pop':{const o=tone(sfxBus,300,t,.3,'sine',.34,.005,.3,false);o.frequency.exponentialRampToValueAtTime(1000,t+.13);noise(sfxBus,t,.14,.25,3000);[1175,1568,1976].forEach((f,k)=>blip(t+.1+k*.07,f,.2,.3));break}
+      case 'tool':blip(t,CUTE[(i||0)%CUTE.length]*((i||0)>=CUTE.length?.5:1),.22,.22);break;
+      case 'close':{const o=tone(sfxBus,820,t,.24,'sine',.28,.005,.2,false);o.frequency.exponentialRampToValueAtTime(300,t+.2);break}
     }
   };
   mb.addEventListener('click',()=>{if(musicOn)musicStop();else musicStart();paint();sfx('toggle')});
   sb.addEventListener('click',()=>{sfxOn=!sfxOn;try{localStorage.setItem('mz-sfx',sfxOn?'on':'off')}catch(_){}paint();if(sfxOn)sfx('toggle')});
   document.addEventListener('visibilitychange',()=>{if(!ctx)return;if(document.hidden)ctx.suspend();else if(musicOn||sfxOn)ctx.resume()});
-  /* soft click sound on anything clickable (the box, tool tiles and audio buttons make their own sounds) */
+  /* a soft pop whenever something is touched (the box, tool tiles and audio buttons make their own sounds) */
   document.addEventListener('pointerdown',e=>{
-    const t=e.target.closest&&e.target.closest('a,button,.card,.photo,.note,.cert,.stat,[role=tab]');
+    const t=e.target.closest&&e.target.closest('a,button,.card,.photo,.note,.cert,.stat,.tile2,[role=tab],[role=button]');
     if(!t||t.closest('#giftbox,.tool,#musicBtn,#sfxBtn'))return;
+    const now=performance.now();if(now-last<60)return;last=now;
     sfx(t.id==='theme'?'toggle':'click');
   },true);
   paint();

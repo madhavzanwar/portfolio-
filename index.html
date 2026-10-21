@@ -107,7 +107,7 @@ body,nav,.card,.cert,.btn,.photo,.board,.tabs{transition-property:background-col
 @media(prefers-reduced-motion:reduce){.star,.scrollhint i{animation:none}}
 /* type */
 section{padding:112px 0 24px;scroll-margin-top:20px}
-#map{padding-bottom:0}.wrap-in{max-width:1216px;margin:0 auto}
+#map{padding-bottom:0}.homebase{padding:48px 0 0}.wrap-in{max-width:1216px;margin:0 auto}
 .tag{display:inline-block;font:700 19px/.95 Gaegu,serif;background:#FFE98A;color:#13233A;padding:6px 16px;border-radius:var(--pill);transform:rotate(-2deg);box-shadow:var(--btn-shadow)}
 h2{font-weight:800;font-size:clamp(43px,8vw,89px);line-height:.94;letter-spacing:-.055em;color:var(--ink);margin:18px 0 28px}
 h2 em{font-style:normal;color:var(--sky)}
@@ -199,6 +199,40 @@ h2 em{font-style:normal;color:var(--sky)}
 /* contact */
 .mail{display:inline-block;font-weight:800;font-size:clamp(28px,6vw,70px);line-height:.94;letter-spacing:-.05em;color:var(--ink);text-decoration:none;word-break:break-all;border-bottom:6px solid var(--peach);transition:border-color .2s}
 .mail:hover{border-color:var(--sky)}
+/* gift box toolbox */
+.gift-stage{position:relative;height:620px;margin-top:8px;overflow-x:clip}
+.giftbox{position:absolute;left:50%;bottom:30px;width:240px;height:220px;transform:translateX(-50%);cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
+.giftbox:focus-visible{outline:3px solid var(--sky);outline-offset:10px;border-radius:20px}
+.gb-body{position:absolute;left:14px;right:14px;bottom:0;height:156px;background:#F2555D;border-radius:6px 6px 20px 20px;box-shadow:inset 0 -30px 0 rgba(0,0,0,.13),rgba(60,30,0,.45) 0 24px 30px -18px;overflow:hidden}
+.gb-body::after{content:"";position:absolute;inset:auto 0 0 0;height:14px;background:rgba(0,0,0,.18)}
+.gb-lid{position:absolute;left:0;right:0;bottom:146px;height:66px;background:#FF6B73;border-radius:12px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.1),rgba(60,30,0,.35) 0 14px 18px -10px;transform-origin:0 100%;transition:transform .9s cubic-bezier(.34,1.5,.5,1);will-change:transform}
+.rib{position:absolute;left:50%;top:0;bottom:0;width:38px;transform:translateX(-50%);background:#FFE98A;box-shadow:inset 6px 0 0 rgba(255,255,255,.35),inset -6px 0 0 rgba(0,0,0,.08)}
+.bow{position:absolute;left:50%;top:-38px;width:0;height:0}
+.bow b{position:absolute;width:64px;height:46px;border:11px solid #FFE98A;border-radius:60% 40% 60% 40%;top:-8px}
+.bow b:first-child{left:-66px;transform:rotate(-24deg)}.bow b:nth-child(2){left:2px;transform:rotate(24deg) scaleX(-1)}
+.bow u{position:absolute;left:-14px;top:12px;width:28px;height:24px;background:#F2C94C;border-radius:8px}
+.gift.open .gb-lid{transform:translate(168px,6px) rotate(22deg)}
+.gift:not(.open) .giftbox{animation:wob 2.8s ease-in-out infinite}
+.gift.shake .giftbox{animation:shake .45s ease-in-out}
+@keyframes wob{0%,86%,100%{transform:translateX(-50%) rotate(0)}90%{transform:translateX(-50%) rotate(-3deg)}94%{transform:translateX(-50%) rotate(3deg)}97%{transform:translateX(-50%) rotate(-2deg)}}
+@keyframes shake{0%,100%{transform:translateX(-50%) rotate(0) scale(1)}20%{transform:translateX(-52%) rotate(-5deg) scale(1.03)}40%{transform:translateX(-48%) rotate(5deg) scale(1.05)}60%{transform:translateX(-52%) rotate(-4deg) scale(1.03)}80%{transform:translateX(-49%) rotate(3deg)}}
+.giftlbl{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font:700 22px/1 Gaegu,serif;color:var(--link);white-space:nowrap;display:flex;gap:8px;align-items:center;pointer-events:none}
+.giftlbl svg{width:34px;height:18px;fill:none;stroke:#F2555D;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.tools{position:absolute;inset:0;pointer-events:none}
+.tool{position:absolute;left:50%;bottom:210px;width:92px;margin-left:-46px;text-align:center;opacity:0;transform:translate(0,40px) scale(.15) rotate(0);transition:transform .75s cubic-bezier(.34,1.56,.64,1),opacity .25s;transition-delay:0s;pointer-events:none;z-index:1}
+.gift.open .tool{opacity:1;transform:translate(var(--x),var(--y)) scale(1) rotate(var(--r));transition-delay:calc(var(--i)*75ms + .25s);pointer-events:auto}
+.tool .tile{display:grid;place-items:center;width:78px;height:78px;margin:0 auto;border-radius:4px 4px 18px 18px;font:800 26px/1 'Bricolage Grotesque';letter-spacing:-.04em;color:#13233A;background:var(--c);box-shadow:var(--card-shadow);cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.gift.open .tool .tile{animation:bob 3.2s ease-in-out infinite;animation-delay:calc(var(--i)*-.4s)}
+.tool:hover .tile{animation:none;transform:translateY(-10px) scale(1.12) rotate(-4deg)}
+.tool .tile.hop{animation:hop .5s cubic-bezier(.3,1.6,.5,1)}
+.tool span{display:block;margin-top:8px;font:700 19px/1 Gaegu,serif;color:var(--ink)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes hop{0%{transform:translateY(0)}40%{transform:translateY(-22px) scale(1.15)}100%{transform:translateY(0)}}
+.confetti{position:absolute;left:50%;bottom:170px;width:10px;height:14px;border-radius:2px;pointer-events:none;z-index:3}
+@media(max-width:820px){.gift.open .gb-lid{transform:translate(104px,10px) rotate(20deg)}.gift-stage{height:560px}.giftbox{transform:translateX(-50%) scale(.8);transform-origin:50% 100%}.tool{width:64px;margin-left:-32px;bottom:190px}.tool .tile{width:54px;height:54px;font-size:18px}.tool span{font-size:16px}
+@keyframes wob{0%,86%,100%{transform:translateX(-50%) scale(.8) rotate(0)}92%{transform:translateX(-50%) scale(.8) rotate(-3deg)}96%{transform:translateX(-50%) scale(.8) rotate(3deg)}}
+@keyframes shake{0%,100%{transform:translateX(-50%) scale(.8)}30%{transform:translateX(-52%) scale(.84) rotate(-5deg)}60%{transform:translateX(-48%) scale(.84) rotate(5deg)}}}
+@media(prefers-reduced-motion:reduce){.gift:not(.open) .giftbox,.gift.shake .giftbox,.gift.open .tool .tile{animation:none}.gb-lid,.tool{transition-duration:.01s;transition-delay:0s!important}}
 /* map embed */
 .mapbox{position:relative;margin-top:48px;border-radius:4px 4px 18px 18px;overflow:hidden;box-shadow:var(--card-shadow);background:var(--k-sky);aspect-ratio:16/7;min-height:280px}
 .mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
@@ -290,6 +324,28 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
     </div>
   </div>
   <div class="jfall" id="jfall"></div>
+  <div class="wrap-in homebase">
+    <span class="tag reveal">home base</span>
+    <h2 class="reveal" style="font-size:clamp(34px,5.4vw,64px)">Based in <em>Pune.</em></h2>
+    <div class="mapbox reveal" style="margin-top:8px">
+    <div class="where"><svg viewBox="0 0 52 70" aria-hidden="true"><path d="M26 68C22 62 2 42 2 26a24 24 0 0 1 48 0c0 16-20 36-24 42z"/><circle cx="26" cy="26" r="9" fill="#fff"/></svg>Pune, India</div>
+    <iframe title="Map of Pune, Maharashtra, India" src="https://www.google.com/maps?q=Pune,+Maharashtra,+India&amp;z=11&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  </div>
+  </div>
+</section>
+
+<section id="tools">
+  <span class="tag reveal">the toolbox</span>
+  <h2 class="reveal">Everything I know, <em>right here.</em></h2>
+  <p class="lead reveal">The tools I reach for most. Tap the box.</p>
+  <div class="gift-stage gift" id="gift">
+    <div class="tools" id="toolsPop" aria-live="polite"></div>
+    <div class="giftbox" id="giftbox" role="button" tabindex="0" aria-expanded="false" aria-label="Open the toolbox">
+      <div class="gb-body"><i class="rib"></i></div>
+      <div class="gb-lid"><i class="rib"></i><span class="bow"><b></b><b></b><u></u></span></div>
+    </div>
+    <div class="giftlbl" id="giftlbl"><span>tap me!</span><svg viewBox="0 0 34 18"><path d="M2 14C10 2 22 2 31 10M31 10l-7-1M31 10l-2 7"/></svg></div>
+  </div>
 </section>
 
 <section id="work">
@@ -344,10 +400,6 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
     <a class="btn light" href="https://www.linkedin.com/in/madhav-zanwar-395ba1389/">LinkedIn</a>
     <a class="btn light" href="https://leetcode.com/u/madhav_builds/">LeetCode</a>
     <a class="btn light" href="tel:+918080956037">+91 80809 56037</a>
-  </div>
-  <div class="mapbox reveal">
-    <div class="where"><svg viewBox="0 0 52 70" aria-hidden="true"><path d="M26 68C22 62 2 42 2 26a24 24 0 0 1 48 0c0 16-20 36-24 42z"/><circle cx="26" cy="26" r="9" fill="#fff"/></svg>Pune, India</div>
-    <iframe title="Map of Pune, Maharashtra, India" src="https://www.google.com/maps?q=Pune,+Maharashtra,+India&amp;z=11&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
   </div>
 </section>
 </main>
@@ -430,6 +482,47 @@ const STOPS=[
   }
   addEventListener('scroll',measure,{passive:true});addEventListener('resize',measure);
   measure();requestAnimationFrame(frame);
+})();
+
+
+window.sfx=window.sfx||function(){};
+/* gift box */
+(function(){
+  const gift=document.getElementById('gift'),box=document.getElementById('giftbox'),pop=document.getElementById('toolsPop'),lbl=document.getElementById('giftlbl').firstElementChild;
+  const T=[['Python','Py','#FFE98A'],['C++','C++','#CFE7FF'],['JavaScript','JS','#FFD1C4'],['Flask','Fl','#C9EBD2'],['Pandas','Pd','#D9CCFF'],['NumPy','Np','#CFE7FF'],['GitHub','Git','#FFE0B8'],['Claude API','Cl','#FFD1C4']];
+  T.forEach((t,i)=>pop.insertAdjacentHTML('beforeend',`<div class="tool" style="--i:${i};--c:${t[2]}"><div class="tile">${t[1]}</div><span>${t[0]}</span></div>`));
+  const tools=[...pop.children];
+  function layout(){
+    const w=gift.clientWidth,R=Math.min(260,w*.44),n=tools.length;
+    tools.forEach((el,i)=>{
+      const a=(-72+144*i/(n-1))*Math.PI/180;
+      el.style.setProperty('--x',(R*Math.sin(a)).toFixed(1)+'px');
+      el.style.setProperty('--y',(-(R*Math.cos(a))*.92).toFixed(1)+'px');
+      el.style.setProperty('--r',((a*180/Math.PI)*.18).toFixed(1)+'deg');
+    });
+  }
+  layout();addEventListener('resize',layout);
+  function confetti(){
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches||!box.animate)return;
+    const cols=['#F2555D','#FFE98A','#6CB4FF','#C9EBD2','#D9CCFF','#FFD1C4'];
+    for(let i=0;i<28;i++){
+      const c=document.createElement('i');c.className='confetti';c.style.background=cols[i%cols.length];gift.appendChild(c);
+      const ang=(-90+(Math.random()-.5)*150)*Math.PI/180,d=140+Math.random()*190;
+      c.animate([{transform:'translate(-50%,0) rotate(0)',opacity:1},{transform:`translate(calc(-50% + ${Math.cos(ang)*d}px),${Math.sin(ang)*d}px) rotate(${Math.random()*720}deg)`,opacity:1,offset:.6},{transform:`translate(calc(-50% + ${Math.cos(ang)*d*1.1}px),${Math.sin(ang)*d+160}px) rotate(${Math.random()*900}deg)`,opacity:0}],{duration:1300+Math.random()*500,easing:'cubic-bezier(.2,.7,.3,1)'}).onfinish=()=>c.remove();
+    }
+  }
+  function toggle(){
+    const open=!gift.classList.contains('open');
+    if(open){
+      gift.classList.add('shake');sfx('shake');
+      setTimeout(()=>{gift.classList.remove('shake');gift.classList.add('open');sfx('pop');confetti();tools.forEach((_,i)=>setTimeout(()=>sfx('tool',i),250+i*75))},open&&!matchMedia('(prefers-reduced-motion:reduce)').matches?450:0);
+    }else{gift.classList.remove('open');sfx('close')}
+    box.setAttribute('aria-expanded',open);box.setAttribute('aria-label',open?'Close the toolbox':'Open the toolbox');
+    lbl.textContent=open?'tap again to pack up':'tap me!';
+  }
+  box.addEventListener('click',toggle);
+  box.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}});
+  tools.forEach(t=>t.querySelector('.tile').addEventListener('click',e=>{const tl=e.currentTarget;tl.classList.remove('hop');void tl.offsetWidth;tl.classList.add('hop');sfx('tool',Math.floor(Math.random()*8))}));
 })();
 
 window.__z=20;

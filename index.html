@@ -514,8 +514,8 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
 <section id="work">
   <span class="tag reveal">things I've made</span>
   <h2 class="reveal">Selected <em>projects</em></h2>
-  <div class="tabs reveal" role="tablist" aria-label="Project groups"><button class="on" role="tab" aria-selected="true" data-f="key">Core projects</button><button role="tab" aria-selected="false" data-f="other">Other projects</button></div>
-  <div class="grid" id="grid"></div>
+  <div class="tabs reveal" role="tablist" aria-label="Project groups"><button class="on" role="tab" aria-selected="true" aria-controls="grid" data-f="key">Core projects</button><button role="tab" aria-selected="false" aria-controls="grid" tabindex="-1" data-f="other">Other projects</button></div>
+  <div class="grid" id="grid" role="tabpanel"></div>
 </section>
 
 <section id="wins">
@@ -604,7 +604,8 @@ function render(f){
 }
 render('key');
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('.tabs button').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-selected',x===b)});render(b.dataset.f)});
+  document.querySelectorAll('.tabs button').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-selected',x===b);x.tabIndex=x===b?0:-1});render(b.dataset.f)});
+document.querySelector('.tabs').addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;const t=[...document.querySelectorAll('.tabs button')],i=t.indexOf(document.activeElement);if(i<0)return;e.preventDefault();const n=t[(i+(e.key==='ArrowRight'?1:t.length-1))%t.length];n.focus();n.click()});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 const links=[...document.querySelectorAll('nav a')];

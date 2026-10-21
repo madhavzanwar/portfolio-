@@ -88,10 +88,16 @@ h2 em{font-style:normal;color:var(--sky)}
 .cert span:first-child{font-weight:600;font-size:16px;color:var(--ink)}
 .cert span:last-child{font:700 18px Gaegu,serif;color:var(--link);white-space:nowrap}
 /* wall */
-.wall{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.wall div{aspect-ratio:3/4;border-radius:12px;display:grid;place-items:center;text-align:center;padding:12px;font:700 19px/1 Gaegu,serif;color:var(--link);box-shadow:var(--card-shadow);transition:transform .3s}
-.wall div:nth-child(5n+1){transform:rotate(-3deg)}.wall div:nth-child(5n+2){transform:rotate(2deg) translateY(14px)}.wall div:nth-child(5n+3){transform:rotate(-1deg)}.wall div:nth-child(5n+4){transform:rotate(3deg) translateY(10px)}.wall div:nth-child(5n){transform:rotate(-2deg)}
-.wall div:hover{transform:rotate(0) translateY(-9px) scale(1.08);z-index:2}
+.board{position:relative;height:820px;border-radius:18px;background:var(--cream);box-shadow:inset 0 0 0 2px rgba(19,35,58,.08);overflow:hidden;touch-action:pan-y}
+.board .hint{position:absolute;right:18px;bottom:12px;font:700 19px/1 Gaegu,serif;color:var(--link);pointer-events:none}
+.photo{position:absolute;width:var(--w,210px);padding:10px 10px 14px;background:#fffdf7;border-radius:4px 4px 18px 18px;box-shadow:var(--card-shadow);cursor:grab;user-select:none;touch-action:none;transform:rotate(var(--r,0deg));transition:box-shadow .2s,transform .2s}
+.photo:hover{transform:rotate(var(--r,0deg)) scale(1.04)}
+.photo.drag{cursor:grabbing;box-shadow:var(--card-shadow-hover);transform:rotate(0deg) scale(1.08);transition:none}
+.photo img{display:block;width:100%;aspect-ratio:var(--ar,3/4);object-fit:cover;border-radius:2px;pointer-events:none;-webkit-user-drag:none}
+.photo figcaption{font:700 21px/1 Gaegu,serif;color:var(--ink);text-align:center;padding-top:8px;pointer-events:none}
+.sticky{position:absolute;right:-14px;top:-18px;width:96px;padding:10px 8px;background:var(--gold);color:var(--ink);font:700 19px/1 Gaegu,serif;text-align:center;transform:rotate(7deg);box-shadow:rgba(60,30,0,.4) 0 10px 14px -8px;pointer-events:none}
+.slot{position:absolute;width:var(--w,190px);aspect-ratio:3/4;border:3px dashed rgba(138,98,66,.45);border-radius:12px;display:grid;place-items:center;text-align:center;padding:12px;font:700 19px/1 Gaegu,serif;color:var(--link);transform:rotate(var(--r,0deg))}
+@media(max-width:820px){.board{height:1180px}.photo{--w:150px}.slot{--w:140px}}
 /* contact */
 .mail{display:inline-block;font-weight:800;font-size:clamp(28px,6vw,70px);line-height:.94;letter-spacing:-.05em;color:var(--ink);text-decoration:none;word-break:break-all;border-bottom:6px solid var(--peach);transition:border-color .2s}
 .mail:hover{border-color:var(--sky)}
@@ -179,8 +185,16 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
 <section id="wall">
   <span class="tag reveal">the wall</span>
   <h2 class="reveal">Life outside <em>the editor</em></h2>
-  <div class="wall reveal">
-    <div class="c-gold">photo soon</div><div class="c-mint">photo soon</div><div class="c-peach">photo soon</div><div class="c-lav">photo soon</div><div class="c-sky">photo soon</div>
+  <div class="board reveal" id="board">
+    <figure class="photo" style="left:4%;top:5%;--r:-4deg;--ar:3/4"><img src="images/wall/pizza.jpg" alt="A wood-fired pizza with olives and basil" draggable="false"><div class="sticky">fav food!</div><figcaption>pizza, always</figcaption></figure>
+    <figure class="photo" style="left:35%;top:8%;--r:3deg;--ar:3/4"><img src="images/wall/chess.jpg" alt="A chess game open on a laptop in a cafe" draggable="false"><figcaption>hobby: chess</figcaption></figure>
+    <figure class="photo" style="left:60%;top:3%;--r:-2deg;--ar:9/16;--w:180px"><img src="images/wall/turf.jpg" alt="A netted box-cricket turf at dusk" draggable="false"><figcaption>random: the turf</figcaption></figure>
+    <figure class="photo" style="left:10%;top:52%;--r:2deg;--ar:1/1"><img src="images/wall/college.jpg" alt="A pink sunset sky over the college buildings" draggable="false"><figcaption>college, golden hour</figcaption></figure>
+    <figure class="photo" style="left:33%;top:52%;--r:-3deg;--ar:3/4;--w:230px"><img src="images/wall/me.jpg" alt="Madhav in a brown jacket against a brick wall" draggable="false"><figcaption>me</figcaption></figure>
+    <div class="slot" style="left:62%;top:50%;--r:3deg">photo coming soon</div>
+    <div class="slot" style="left:80%;top:10%;--r:-3deg;--w:150px">photo coming soon</div>
+    <div class="slot" style="left:82%;top:62%;--r:2deg;--w:150px">photo coming soon</div>
+    <div class="hint">drag me around →</div>
   </div>
 </section>
 
@@ -223,6 +237,21 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 const links=[...document.querySelectorAll('nav a')];
 const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-40% 0px -55% 0px'});
 document.querySelectorAll('section').forEach(s=>so.observe(s));
+const board=document.getElementById('board');let z=10;
+board.querySelectorAll('.photo').forEach(el=>{
+  el.addEventListener('pointerdown',e=>{
+    e.preventDefault();el.setPointerCapture(e.pointerId);
+    const b=board.getBoundingClientRect(),r=el.getBoundingClientRect();
+    const dx=e.clientX-r.left,dy=e.clientY-r.top;
+    el.style.zIndex=++z;el.classList.add('drag');
+    const mv=ev=>{
+      const x=Math.min(Math.max(ev.clientX-b.left-dx,0),b.width-el.offsetWidth);
+      const y=Math.min(Math.max(ev.clientY-b.top-dy,0),b.height-el.offsetHeight);
+      el.style.left=x+'px';el.style.top=y+'px';};
+    const up=()=>{el.classList.remove('drag');el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up)};
+    el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+  });
+});
 document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 </body>

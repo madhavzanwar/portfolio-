@@ -91,7 +91,7 @@ body,nav,.card,.cert,.btn,.photo,.board,.tabs{transition-property:background-col
 .scrollhint i{display:block;width:2px;height:28px;background:var(--link);animation:drop 1.6s ease-in-out infinite;transform-origin:top}
 @keyframes drop{0%{transform:scaleY(0)}60%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
 /* notes: they appear one by one as you scroll, then you can drag them */
-.notes{position:relative;height:min(580px,74vh)}
+.notes{position:relative;height:min(540px,66vh);margin-top:64px}
 .note{position:absolute;width:min(250px,76%);padding:24px 18px 16px;color:#13233A;font:700 21px/1.1 Gaegu,serif;cursor:grab;user-select:none;touch-action:none;box-shadow:rgba(60,30,0,.4) 0 20px 26px -16px,rgba(255,255,255,.5) 0 1px 0 inset;border-radius:3px 3px 14px 3px;opacity:0;transform:translate(var(--tx,0px),calc(var(--ty,0px) + 40px)) rotate(calc(var(--r,0deg) - 8deg)) scale(.7);pointer-events:none;transition:opacity .45s,transform .6s cubic-bezier(.3,1.5,.5,1),box-shadow .2s}
 .note.on{opacity:1;transform:translate(var(--tx,0px),var(--ty,0px)) rotate(var(--r,0deg)) scale(1);pointer-events:auto}
 .note::before{content:"";position:absolute;left:50%;top:-12px;width:84px;height:24px;transform:translateX(-50%) rotate(-2deg);background:rgba(255,255,255,.55);box-shadow:0 1px 3px rgba(0,0,0,.12)}
@@ -100,7 +100,7 @@ body,nav,.card,.cert,.btn,.photo,.board,.tabs{transition-property:background-col
 .note:hover:not(.drag){box-shadow:rgba(60,30,0,.5) 0 26px 30px -16px}
 .note .chips span{background:rgba(255,255,255,.75);color:#13233A;font:700 13px 'Bricolage Grotesque'}
 .n1{background:#FFE98A;left:16%;top:0%;--r:3deg}.n2{background:#FFD1C4;left:2%;top:28%;--r:-3deg}.n3{background:#C9EBD2;left:26%;top:52%;--r:2.5deg;width:min(230px,72%)}.n4{background:#CFE7FF;left:6%;top:76%;--r:-2deg;width:min(240px,74%)}
-.notehint{position:absolute;left:-8%;top:-9%;z-index:2;background:var(--glass-2);color:var(--ink);padding:8px 14px;border-radius:var(--pill);font:600 14px 'Bricolage Grotesque';box-shadow:var(--btn-shadow);transform:rotate(-3deg) scale(.8);opacity:0;white-space:nowrap;display:flex;align-items:center;gap:6px;pointer-events:none;transition:opacity .4s .3s,transform .5s .3s cubic-bezier(.3,1.5,.5,1)}
+.notehint{position:absolute;left:-4%;top:-8%;z-index:2;background:var(--glass-2);color:var(--ink);padding:8px 14px;border-radius:var(--pill);font:600 14px 'Bricolage Grotesque';box-shadow:var(--btn-shadow);transform:rotate(-3deg) scale(.8);opacity:0;white-space:nowrap;display:flex;align-items:center;gap:6px;pointer-events:none;transition:opacity .4s .3s,transform .5s .3s cubic-bezier(.3,1.5,.5,1)}
 .notehint.on{opacity:1;transform:rotate(-3deg) scale(1)}
 .notehint svg{width:28px;height:16px;fill:none;stroke:#F2555D;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .hl-vars{--hl-sky:rgba(108,180,255,.55);--hl-yel:#FFD84D;--hl-lav:#D9CCFF;--hl-peach:#FFC2B3;--scr:#13233A;--wave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12'%3E%3Cpath d='M0 6q6-8 12 0t12 0' fill='none' stroke='%2313233A' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E")}

@@ -473,8 +473,8 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
           <a class="tile2 t-in" id="cIn" href="https://www.linkedin.com/in/madhav-zanwar-395ba1389/" target="_blank" rel="noopener" aria-label="Madhav on LinkedIn"><span class="key">L</span><svg class="f" viewBox="0 0 24 24"><path d="M5.2 9.2h3v9.6h-3zM6.7 4.6a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5zM10.3 9.2h2.9v1.3c.5-.9 1.6-1.5 3-1.5 3 0 3.6 1.9 3.6 4.4v5.4h-3v-4.8c0-1.2 0-2.6-1.6-2.6s-1.9 1.2-1.9 2.5v4.9h-3z"/></svg></a>
           <small>/in/madhav-zanwar</small></div>
         <div class="app"><span class="cap">Life outside the editor.</span><svg class="arr" viewBox="0 0 14 20"><path d="M7 1v16M2 12l5 6 5-6"/></svg>
-          <a class="tile2 t-ig" id="cIg" href="#contact" aria-label="Madhav on Instagram (handle coming soon)"><span class="key">I</span><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg></a>
-          <small>handle coming soon</small></div>
+          <a class="tile2 t-ig" id="cIg" href="https://www.instagram.com/madhavzanwar/" target="_blank" rel="noopener" aria-label="Madhav on Instagram"><span class="key">I</span><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg></a>
+          <small>@madhavzanwar</small></div>
         <div class="app"><span class="cap">Code, in public.</span><svg class="arr" viewBox="0 0 14 20"><path d="M7 1v16M2 12l5 6 5-6"/></svg>
           <a class="tile2 t-gh" id="cGh" href="https://github.com/madhavzanwar" target="_blank" rel="noopener" aria-label="Madhav on GitHub"><span class="key">G</span><svg viewBox="0 0 24 24"><circle cx="6" cy="5.5" r="2.2"/><circle cx="6" cy="18.5" r="2.2"/><circle cx="18" cy="9" r="2.2"/><path d="M6 7.7v8.6M18 11.2c0 3.6-6 2.4-12 5.4"/></svg></a>
           <small>@madhavzanwar</small></div>
@@ -744,12 +744,11 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDial()});
 const toast=document.getElementById('toast');let toastT;
 function say(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>toast.classList.remove('show'),2200)}
 document.getElementById('copyMail').addEventListener('click',()=>{const m='madhavzanwar13@gmail.com';(navigator.clipboard?navigator.clipboard.writeText(m):Promise.reject()).then(()=>say('Email copied'),()=>say(m));sfx('toggle')});
-document.getElementById('cIg').addEventListener('click',e=>{e.preventDefault();say('Instagram handle coming soon')});
 const keys={m:'cMail',l:'cIn',i:'cIg',g:'cGh'};
 document.addEventListener('keydown',e=>{
   if(e.metaKey||e.ctrlKey||e.altKey||e.repeat)return;const t=e.target;if(t&&(/^(input|textarea|select)$/i.test(t.tagName)||t.isContentEditable))return;
   const id=keys[e.key.toLowerCase()];if(!id)return;const el=document.getElementById(id);el.classList.add('press');setTimeout(()=>el.classList.remove('press'),180);sfx('click');
-  if(id==='cMail')location.href=el.href;else if(id==='cIg')say('Instagram handle coming soon');else window.open(el.href,'_blank','noopener');
+  if(id==='cMail')location.href=el.href;else window.open(el.href,'_blank','noopener');
 });
 const tb=document.getElementById('theme'),root=document.documentElement,tm=document.querySelector('meta[name=theme-color]');
 function paintTheme(){const d=root.dataset.theme==='dark';tb.setAttribute('aria-pressed',d);tb.setAttribute('aria-label',d?'Switch to light mode':'Switch to dark mode');if(tm)tm.content=d?'#161616':'#FFF8EC'}

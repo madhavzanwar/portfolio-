@@ -49,7 +49,7 @@ a{color:inherit}
 .navwrap{position:sticky;top:12px;z-index:40;display:flex;justify-content:center;padding:0 12px}
 nav{display:flex;align-items:center;gap:4px;height:64px;padding:0 8px;border-radius:var(--pill);background:var(--glass);backdrop-filter:blur(14px);
   box-shadow:var(--nav-hair) 0 1px 0 0 inset,var(--hair) 0 0 0 1px inset,rgba(19,35,58,.06) 0 0 0 1px,rgba(19,35,58,.45) 0 24px 48px -20px,rgba(19,35,58,.18) 0 4px 12px -6px;max-width:100%}
-nav .nl{display:flex;gap:4px;min-width:0;overflow-x:auto;scrollbar-width:none}nav .nl::-webkit-scrollbar{display:none}
+nav .nl{display:flex;gap:4px;min-width:0;overflow-x:auto;scrollbar-width:none;padding-right:14px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent)}nav .nl::-webkit-scrollbar{display:none}
 @media(max-width:700px){nav b{display:none}nav{padding:0 6px}.navres{padding:0 14px;font-size:14px}}
 nav b{font-weight:800;font-size:17px;letter-spacing:-.4px;color:var(--ink);padding:0 14px 0 16px;white-space:nowrap}
 nav a{height:48px;display:flex;align-items:center;padding:0 15px;border-radius:var(--pill);font-size:15px;font-weight:600;letter-spacing:-.15px;color:var(--ink);text-decoration:none;white-space:nowrap;transition:transform .2s,background .2s,color .2s}
@@ -583,7 +583,7 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
           <small>@madhav_builds</small></div>
         <div class="app"><span class="cap">My resume, one click away.</span><svg class="arr" viewBox="0 0 14 20"><path d="M7 1v16M2 12l5 6 5-6"/></svg>
           <a class="tile2 t-rs" id="cRs" href="Madhav_Zanwar_Resume.pdf" target="_blank" rel="noopener" download="Madhav_Zanwar_Resume.pdf" aria-label="Download Madhav's resume"><span class="key">R</span><svg viewBox="0 0 24 24"><path d="M12 4v12M6.5 11.5 12 17l5.500-5.500M5 20h14"/></svg></a>
-          <small>PDF · one page</small></div>
+          <small>PDF</small></div>
       </div>
     </div>
   </div>

@@ -87,7 +87,7 @@ body,nav,.card,.cert,.btn,.photo,.board,.tabs{transition-property:background-col
 .dd-scr{stroke:var(--scr,#13233A);stroke-width:2.6}
 .dd-star{fill:#F2555D}
 .dd-star.b{fill:var(--sky)}
-.scrollhint{position:absolute;left:20px;bottom:26px;font:700 19px/1 Gaegu,serif;color:var(--link);display:flex;align-items:center;gap:8px;opacity:calc(1 - var(--hp,0)*14)}
+.scrollhint{position:absolute;left:20px;bottom:26px;font:700 19px/1 Gaegu,serif;color:var(--link);display:flex;align-items:center;gap:8px}
 .scrollhint i{display:block;width:2px;height:28px;background:var(--link);animation:drop 1.6s ease-in-out infinite;transform-origin:top}
 @keyframes drop{0%{transform:scaleY(0)}60%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
 /* notes: they appear one by one as you scroll, then you can drag them */
@@ -165,6 +165,10 @@ h2 em{font-style:normal;color:var(--sky)}
 .stage{position:sticky;top:0;height:100vh;overflow:hidden;border-radius:0;width:100vw;margin-left:calc(50% - 50vw)}
 .world{position:absolute;left:0;top:0;width:1200px;height:2400px;transform-origin:0 0;will-change:transform}
 .world svg{position:absolute;inset:0;overflow:visible}
+/* static basemap and the moving marker each get their own GPU layer, so scrolling only repaints the thin trail */
+.world svg.bm{will-change:transform;pointer-events:none}
+.world svg.mlayer{inset:auto;left:-240px;top:-240px;width:480px;height:480px;will-change:transform}
+.paused,.paused *{animation-play-state:paused!important}
 .track{fill:none;stroke:rgba(44,127,214,.28);stroke-width:7;stroke-dasharray:2 18;stroke-linecap:round}
 .trail{fill:none;stroke:var(--sky);stroke-width:9;stroke-linecap:round}
 .stop-dot{fill:var(--canvas);stroke:var(--sky);stroke-width:5;stroke-linejoin:round;transition:fill .3s}
@@ -177,7 +181,6 @@ h2 em{font-style:normal;color:var(--sky)}
 @keyframes ping{0%{transform:scale(.7);opacity:.9}100%{transform:scale(2.6);opacity:0}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .stop-lbl{font:700 34px Gaegu,serif;fill:var(--link);text-anchor:middle;opacity:.9}
-.navm{filter:drop-shadow(0 8px 8px rgba(19,35,58,.3))}
 .jcard{position:absolute;z-index:3;width:min(400px,calc(100% - 40px));top:50%;opacity:0;transform:translateY(-44%) scale(.96);pointer-events:none;transition:opacity .45s,transform .45s cubic-bezier(.2,.8,.2,1)}
 .jcard{padding:0!important;overflow:hidden}
 .jc-top{display:flex;align-items:center;gap:12px;padding:16px 18px;background:rgba(0,0,0,.07)}
@@ -329,7 +332,7 @@ h2 em{font-style:normal;color:var(--sky)}
 @media(max-width:820px){.gstage.open .gb-lid{transform:translate(56px,-12px) rotate(20deg)}.gstage{height:940px}.giftbox{width:300px;height:283px}.ghead{padding-top:84px}.tool span{font-size:9.5px}}
 @media(prefers-reduced-motion:reduce){.gstage:not(.open) .giftbox,.gstage.shake .giftbox,.gstage.open .tool .tile,.gstage.open .spk{animation:none}.gb-lid,.tool,.beam{transition-duration:.01s;transition-delay:0s!important}}
 /* audio controls */
-.musicbtn{position:fixed;right:16px;top:16px;z-index:45;display:flex;align-items:center;gap:10px;height:48px;padding:0 18px 0 8px;border:0;border-radius:var(--pill);background:var(--glass-2);color:var(--ink);font:700 14.5px 'Bricolage Grotesque';cursor:pointer;box-shadow:var(--btn-shadow);backdrop-filter:blur(10px);transition:transform .2s}
+.musicbtn{position:fixed;right:16px;top:16px;z-index:45;display:flex;align-items:center;gap:10px;height:48px;padding:0 18px 0 8px;border:0;border-radius:var(--pill);background:var(--glass-2);color:var(--ink);font:700 14.5px 'Bricolage Grotesque';cursor:pointer;box-shadow:var(--btn-shadow);transition:transform .2s}
 .musicbtn:hover{transform:translateY(-2px)}
 .disc{position:relative;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle,#F2555D 0 22%,#13233A 24% 100%);box-shadow:0 0 0 2px rgba(255,255,255,.2) inset}
 .disc::after{content:"";position:absolute;inset:6px;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
@@ -340,7 +343,7 @@ h2 em{font-style:normal;color:var(--sky)}
 .musicbtn[aria-pressed="true"] .eq{display:flex}.musicbtn[aria-pressed="true"] .play{display:none}
 .play{width:14px;height:14px;fill:var(--sky)}
 @keyframes eq{0%,100%{height:4px}50%{height:16px}}
-.sfxbtn{position:fixed;left:16px;bottom:18px;z-index:45;width:48px;height:48px;border:0;border-radius:50%;background:var(--glass-2);color:var(--ink);cursor:pointer;display:grid;place-items:center;box-shadow:var(--btn-shadow);backdrop-filter:blur(10px);transition:transform .2s}
+.sfxbtn{position:fixed;left:16px;bottom:18px;z-index:45;width:48px;height:48px;border:0;border-radius:50%;background:var(--glass-2);color:var(--ink);cursor:pointer;display:grid;place-items:center;box-shadow:var(--btn-shadow);transition:transform .2s}
 .sfxbtn:hover{transform:translateY(-2px)}
 .sfxbtn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .sfxbtn .off{display:none}.sfxbtn[aria-pressed="false"] .on{display:none}.sfxbtn[aria-pressed="false"] .off{display:block}
@@ -358,10 +361,10 @@ h2 em{font-style:normal;color:var(--sky)}
 .cl{position:absolute;left:-8%;right:-8%;top:-14%;bottom:-14%;background-repeat:no-repeat;background-position:center;background-size:cover;will-change:transform}
 .cl.far{background-image:url(images/clouds-far-day.webp);opacity:.9;transform:translate3d(calc((var(--cp) - .5)*30px),calc((var(--cp) - .5)*-70px),0) scale(calc(1 + var(--cp)*.04))}
 .cl.mid{background-image:url(images/clouds-mid-day.webp);transform:translate3d(calc((var(--cp) - .5)*-90px),calc((var(--cp) - .5)*-190px),0) scale(calc(1.04 + var(--cp)*.12))}
-.cl.near{background-image:url(images/clouds-near-day.webp);filter:drop-shadow(0 26px 30px rgba(20,60,120,.28));transform:translate3d(calc((var(--cp) - .5)*170px),calc((var(--cp) - .5)*-380px),0) scale(calc(1.1 + var(--cp)*.3))}
+.cl.near{background-image:url(images/clouds-near-day.webp);transform:translate3d(calc((var(--cp) - .5)*170px),calc((var(--cp) - .5)*-380px),0) scale(calc(1.1 + var(--cp)*.3))}
 [data-theme="dark"] .cl.far{background-image:url(images/clouds-far-night.webp)}
 [data-theme="dark"] .cl.mid{background-image:url(images/clouds-mid-night.webp)}
-[data-theme="dark"] .cl.near{background-image:url(images/clouds-near-night.webp);filter:drop-shadow(0 26px 30px rgba(0,0,0,.4))}
+[data-theme="dark"] .cl.near{background-image:url(images/clouds-near-night.webp)}
 @media(prefers-reduced-motion:reduce){.cl.far,.cl.mid,.cl.near{transform:none}}
 .c-in{position:relative;max-width:980px;margin:0 auto;text-align:center}
 .contact h2{position:relative;color:#fff;text-shadow:0 4px 30px rgba(10,40,90,.35);margin:0 auto 18px;font-size:clamp(46px,9vw,112px);line-height:.92;max-width:900px}
@@ -413,7 +416,7 @@ h2 em{font-style:normal;color:var(--sky)}
 .dial .plus{width:56px;height:56px;border:0;border-radius:50%;background:var(--on-bg);color:var(--on-fg);cursor:pointer;display:grid;place-items:center;box-shadow:var(--btn-shadow),0 14px 24px -12px rgba(0,0,0,.5);transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
 .dial .plus svg{width:24px;height:24px;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;fill:none}
 .dial.open .plus{transform:rotate(135deg)}
-.dial .opt{display:flex;align-items:center;gap:10px;height:46px;padding:0 18px;border:0;border-radius:var(--pill);background:var(--glass-2);color:var(--ink);font:700 14.5px 'Bricolage Grotesque';text-decoration:none;cursor:pointer;box-shadow:var(--btn-shadow);backdrop-filter:blur(10px);opacity:0;visibility:hidden;transform:translateY(14px) scale(.9);pointer-events:none;transition:opacity .25s,transform .35s cubic-bezier(.3,1.6,.5,1),visibility 0s .35s}
+.dial .opt{display:flex;align-items:center;gap:10px;height:46px;padding:0 18px;border:0;border-radius:var(--pill);background:var(--glass-2);color:var(--ink);font:700 14.5px 'Bricolage Grotesque';text-decoration:none;cursor:pointer;box-shadow:var(--btn-shadow);opacity:0;visibility:hidden;transform:translateY(14px) scale(.9);pointer-events:none;transition:opacity .25s,transform .35s cubic-bezier(.3,1.6,.5,1),visibility 0s .35s}
 .dial.open .opt{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition-delay:calc(var(--n)*45ms),calc(var(--n)*45ms),0s}
 .dial .opt:hover{transform:translateY(-2px)}
 @media(prefers-reduced-motion:reduce){.contact h2 .m2{transition:none;background-size:100% 80%}.dial,.dial .opt,.dial .plus{transition-duration:.01s}}
@@ -492,8 +495,10 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
           <path id="route" class="track" d="M600 140 C180 330 180 560 600 720 S1020 1080 600 1280 S180 1640 600 1840 S1000 2120 600 2280"/>
           <path id="trail" class="trail" d="M600 140 C180 330 180 560 600 720 S1020 1080 600 1280 S180 1640 600 1840 S1000 2120 600 2280"/>
           <g id="dots"></g>
+        </svg>
+        <svg class="mlayer" id="navMarker" viewBox="-240 -240 480 480" aria-hidden="true">
           <defs><radialGradient id="coneG" cx="50%" cy="100%" r="100%"><stop offset="0" stop-color="#4C9BFF" stop-opacity=".55"/><stop offset="1" stop-color="#4C9BFF" stop-opacity="0"/></radialGradient></defs>
-          <g id="navMarker" class="navm"><g id="cone"><path d="M0 0 L-92 -210 A230 230 0 0 1 92 -210 Z" fill="url(#coneG)"/></g><circle class="acc" r="58"/><circle class="ring" r="30"/><circle class="ring r2" r="30"/><g id="navArrow"><circle r="27" fill="#fff" stroke="rgba(19,35,58,.18)" stroke-width="2"/><path d="M0-17 13 14 0 7-13 14z" fill="#2C7FD6" stroke="#2C7FD6" stroke-width="3" stroke-linejoin="round"/></g></g>
+          <g id="cone"><path d="M0 0 L-92 -210 A230 230 0 0 1 92 -210 Z" fill="url(#coneG)"/></g><circle class="acc" r="58"/><circle class="ring" r="30"/><circle class="ring r2" r="30"/><circle r="30" cy="6" fill="rgba(19,35,58,.16)"/><g id="navArrow"><circle r="27" fill="#fff" stroke="rgba(19,35,58,.18)" stroke-width="2"/><path d="M0-17 13 14 0 7-13 14z" fill="#2C7FD6" stroke="#2C7FD6" stroke-width="3" stroke-linejoin="round"/></g>
         </svg>
       </div>
       <svg class="compass" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="36" fill="var(--glass-2)" stroke="currentColor" stroke-width="1.5" opacity=".95"/><circle cx="40" cy="40" r="28" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4" opacity=".5"/><g id="needle" style="transform-origin:40px 40px"><path d="M40 16 46 40 40 36 34 40z" fill="#F2555D"/><path d="M40 64 34 40 40 44 46 40z" fill="currentColor" opacity=".5"/></g><circle cx="40" cy="40" r="3" fill="var(--canvas)" stroke="currentColor"/><text x="40" y="11" text-anchor="middle">N</text><text x="40" y="76" text-anchor="middle">S</text><text x="8" y="44" text-anchor="middle">W</text><text x="72" y="44" text-anchor="middle">E</text></svg>
@@ -579,19 +584,19 @@ footer{padding:96px 0 48px;font-size:15px;color:var(--faint)}
   <span class="tag reveal">the wall</span>
   <h2 class="reveal">Life outside <em>the editor</em></h2>
   <div class="board reveal" id="board">
-    <figure class="photo" tabindex="0" style="--l:3%;--t:30px;--r:-4deg;--w:230px;--ar:3/4;--pin:#e5484d"><img src="images/wall/me.jpg" alt="Madhav smiling with his arms crossed in front of a hand-drawn mural" draggable="false"><figcaption>me, pretending I have a plan</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:3%;--t:30px;--r:-4deg;--w:230px;--ar:3/4;--pin:#e5484d"><img src="images/wall/me.jpg" alt="Madhav smiling with his arms crossed in front of a hand-drawn mural" draggable="false" loading="lazy" decoding="async"><figcaption>me, pretending I have a plan</figcaption></figure>
     <figure class="photo paper" tabindex="0" style="--l:25%;--t:22px;--r:1deg;--w:340px;--pin:#e5484d"><div class="lbl">OFF THE CLOCK</div><h4>Hi, I'm Madhav. Not the coding version.</h4><h5>Things I can't stop doing</h5><ul><li>Solving one LeetCode a day</li><li>Not listening to music while bathing</li><li>Saying "just one more video" and binging a whole series</li></ul><h5>When I'm not studying</h5><ul><li>Trying out new cafes :)</li><li>Watching standup comedy</li><li>Playing chess and blaming my losses on everything except my strategy</li></ul></figure>
-    <figure class="photo" tabindex="0" style="--l:54%;--t:48px;--r:2.5deg;--w:262px;--ar:735/467;--pin:#3b82f6"><img src="images/wall/palace.jpg" alt="Carved sandstone arches framing a pink palace courtyard" draggable="false"><figcaption>i love jaipur&lt;3</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:78%;--t:26px;--r:-3deg;--w:210px;--ar:3/4;--pin:#f5b301"><img src="images/wall/pizza.jpg" alt="A wood-fired pizza with olives and basil" draggable="false"><div class="sticky">fav food!</div><figcaption>pizza, always</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:3%;--t:565px;--r:3deg;--w:190px;--ar:736/1308;--pin:#2fa56b"><img src="images/wall/bonfire.jpg" alt="Friends gathered around a bonfire at night while someone plays guitar" draggable="false"><figcaption>guitar, fire and off-key singing</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:54%;--t:48px;--r:2.5deg;--w:262px;--ar:735/467;--pin:#3b82f6"><img src="images/wall/palace.jpg" alt="Carved sandstone arches framing a pink palace courtyard" draggable="false" loading="lazy" decoding="async"><figcaption>i love jaipur&lt;3</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:78%;--t:26px;--r:-3deg;--w:210px;--ar:3/4;--pin:#f5b301"><img src="images/wall/pizza.jpg" alt="A wood-fired pizza with olives and basil" draggable="false" loading="lazy" decoding="async"><div class="sticky">fav food!</div><figcaption>pizza, always</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:3%;--t:565px;--r:3deg;--w:190px;--ar:736/1308;--pin:#2fa56b"><img src="images/wall/bonfire.jpg" alt="Friends gathered around a bonfire at night while someone plays guitar" draggable="false" loading="lazy" decoding="async"><figcaption>guitar, fire and off-key singing</figcaption></figure>
     <div class="photo stk" tabindex="0" style="--l:23%;--t:550px;--r:-2.5deg;--w:235px;--sk:#FFE98A">Plot twist: I'm not like most people. Most people love bhindi and dogs. I dislike both, and honestly I have no idea why.<small>unpopular opinion</small></div>
-    <figure class="photo" tabindex="0" style="--l:42%;--t:545px;--r:2deg;--w:210px;--ar:3/4;--pin:#e5484d"><img src="images/wall/chess.jpg" alt="A chess game open on a laptop in a cafe" draggable="false"><div class="sticky mint">my hobby</div><figcaption>hobby: chess</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:63%;--t:565px;--r:-2deg;--w:170px;--ar:9/16;--pin:#3b82f6"><img src="images/wall/turf.jpg" alt="Friends playing box cricket on a netted turf under a dusk sky" draggable="false"><div class="sticky lav">howzat!?</div><figcaption>box cricket, golden-hour innings</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:81%;--t:570px;--r:2.5deg;--w:200px;--ar:3/4;--pin:#f5b301"><img src="images/wall/night.jpg" alt="Feet up over a city skyline at night" draggable="false"><div class="sticky peach">chasing views</div><figcaption>sightseeing</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:23%;--t:815px;--r:2deg;--w:210px;--ar:1/1;--pin:#2fa56b"><img src="images/wall/college.jpg" alt="A pink sunset sky over the college buildings" draggable="false"><div class="sticky sky">college</div><figcaption>college, golden hour</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:42%;--t:545px;--r:2deg;--w:210px;--ar:3/4;--pin:#e5484d"><img src="images/wall/chess.jpg" alt="A chess game open on a laptop in a cafe" draggable="false" loading="lazy" decoding="async"><div class="sticky mint">my hobby</div><figcaption>hobby: chess</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:63%;--t:565px;--r:-2deg;--w:170px;--ar:9/16;--pin:#3b82f6"><img src="images/wall/turf.jpg" alt="Friends playing box cricket on a netted turf under a dusk sky" draggable="false" loading="lazy" decoding="async"><div class="sticky lav">howzat!?</div><figcaption>box cricket, golden-hour innings</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:81%;--t:570px;--r:2.5deg;--w:200px;--ar:3/4;--pin:#f5b301"><img src="images/wall/night.jpg" alt="Feet up over a city skyline at night" draggable="false" loading="lazy" decoding="async"><div class="sticky peach">chasing views</div><figcaption>sightseeing</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:23%;--t:815px;--r:2deg;--w:210px;--ar:1/1;--pin:#2fa56b"><img src="images/wall/college.jpg" alt="A pink sunset sky over the college buildings" draggable="false" loading="lazy" decoding="async"><div class="sticky sky">college</div><figcaption>college, golden hour</figcaption></figure>
     <div class="photo stk" tabindex="0" style="--l:3%;--t:1020px;--r:2deg;--w:230px;--sk:#D9CCFF">You'll never be bored of my company. I'm always cracking some silly jokes, hehe<small>warning: puns</small></div>
-    <figure class="photo" tabindex="0" style="--l:44%;--t:925px;--r:-3deg;--w:185px;--ar:9/16;--pin:#e5484d"><img src="images/wall/badminton.jpg" alt="Madhav leaping to smash during a badminton game" draggable="false"><div class="sticky">fav sport!!</div><figcaption>badminton</figcaption></figure>
-    <figure class="photo" tabindex="0" style="--l:65%;--t:930px;--r:2deg;--w:215px;--ar:3/4;--pin:#3b82f6"><img src="images/wall/food.jpg" alt="A loaded dahi chaat with a mango lassi" draggable="false"><div class="sticky gold">chaat &gt; everything</div><figcaption>foodie</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:44%;--t:925px;--r:-3deg;--w:185px;--ar:9/16;--pin:#e5484d"><img src="images/wall/badminton.jpg" alt="Madhav leaping to smash during a badminton game" draggable="false" loading="lazy" decoding="async"><div class="sticky">fav sport!!</div><figcaption>badminton</figcaption></figure>
+    <figure class="photo" tabindex="0" style="--l:65%;--t:930px;--r:2deg;--w:215px;--ar:3/4;--pin:#3b82f6"><img src="images/wall/food.jpg" alt="A loaded dahi chaat with a mango lassi" draggable="false" loading="lazy" decoding="async"><div class="sticky gold">chaat &gt; everything</div><figcaption>foodie</figcaption></figure>
     <p class="wallnote">it's my wall, but go ahead, move things around ;)</p>
   </div>
 </section>
@@ -672,7 +677,7 @@ const STOPS=[
     const pts=[];for(let l=0;l<=L;l+=25){const q=route.getPointAtLength(l);pts.push([q.x,q.y])}
     const far=(x,y,d)=>pts.every(p=>(p[0]-x)**2+(p[1]-y)**2>d*d);
     let seed=11;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
-    let h='<rect class="land" x="-1800" y="-1000" width="4800" height="4600"/>';
+    let h='';                                  /* land colour comes from the stage background */
     [[120,360,210,150],[1040,780,200,240],[80,1260,220,170],[1080,1640,190,210],[990,2180,210,160],[170,1960,200,210]].forEach(p=>{h+=`<ellipse class="park" cx="${p[0]}" cy="${p[1]}" rx="${p[2]}" ry="${p[3]}"/>`});
     for(let i=0;i<420;i++){const x=-500+rnd()*2200,y=-200+rnd()*2900,w=34+rnd()*60,hh=30+rnd()*54;if(far(x,y,120)&&far(x+w,y+hh,120))h+=`<rect class="blk" x="${x.toFixed(0)}" y="${y.toFixed(0)}" width="${w.toFixed(0)}" height="${hh.toFixed(0)}" rx="8"/>`}
     for(let i=0;i<260;i++){const x=-300+rnd()*1800,y=-100+rnd()*2700;if(far(x,y,85))h+=`<circle class="tree" cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${(6+rnd()*6).toFixed(1)}"/>`}
@@ -681,7 +686,9 @@ const STOPS=[
     const rd=['M-700 1010C-100 1050 500 960 1900 1100','M240 -400C300 600 140 1500 280 2800','M980 -400C920 700 1100 1500 940 2800','M-700 2300C100 2200 700 2400 1900 2260'];
     rd.forEach(d=>{h+=`<path class="road-c" d="${d}"/>`});rd.forEach(d=>{h+=`<path class="road" d="${d}"/>`});
     h+='<text class="city" x="600" y="64">PUNE</text><text class="dist" x="1000" y="1160">coffee district</text><text class="dist" x="210" y="1540">debug valley</text><text class="dist" x="990" y="1960">hackathon heights</text><text class="dist" x="250" y="2160">open source park</text><text class="riv" x="260" y="520">MULA RIVER</text><text class="riv" x="880" y="1690">MUTHA RIVER</text>';
-    g.innerHTML=h;svg.insertBefore(g,route);
+    g.innerHTML=h;
+    const bm=document.createElementNS(NS,'svg');bm.setAttribute('class','bm');bm.setAttribute('viewBox','0 0 1200 2400');bm.setAttribute('aria-hidden','true');
+    bm.appendChild(g);world.insertBefore(bm,svg);
   })();
   STOPS.forEach((s,i)=>{
     const pt=route.getPointAtLength(L*frac(i));
@@ -694,14 +701,15 @@ const STOPS=[
   });
   prog.insertAdjacentHTML('beforeend','<span id="jtxt"></span>');
   const dotEls=[...dots.querySelectorAll('.pin-g')],cardEls=[...cards.children],pEls=[...prog.querySelectorAll('i')],jtxt=document.getElementById('jtxt');
-  let cam={x:600,y:140},tgt={x:600,y:140},active=-1,p=0,uz=1;
+  let cam={x:600,y:140},tgt={x:600,y:140},active=-1,p=-1,uz=1,sw=0,sh=0,raf=0,vis=false,lastT='',dotOn=-1;
   const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+  function size(){sw=stage.clientWidth;sh=stage.clientHeight;kick()}
   function measure(){
     const r=J.getBoundingClientRect(),range=J.offsetHeight-innerHeight;
-    p=clamp(-r.top/range);
-    const pt=route.getPointAtLength(L*p);tgt={x:pt.x,y:pt.y};
+    const np=clamp(-r.top/range);if(np===p)return;p=np;   /* nothing to do while the map is above or below the screen */
+    const pt=route.getPointAtLength(L*p);tgt={x:pt.x,y:pt.y};kick();
     trail.style.strokeDashoffset=L*(1-p);casing.style.strokeDashoffset=L*(1-p);
-    marker.setAttribute("transform",`translate(${pt.x} ${pt.y})`);
+    marker.style.transform=`translate(${pt.x.toFixed(1)}px,${pt.y.toFixed(1)}px)`;
     const q1=route.getPointAtLength(Math.max(0,L*p-8)),q2=route.getPointAtLength(Math.min(L,L*p+8)),ang=Math.atan2(q2.y-q1.y,q2.x-q1.x)*180/Math.PI+90;
     cone.setAttribute('transform',`rotate(${ang.toFixed(1)})`);navArrow.setAttribute('transform',`rotate(${ang.toFixed(1)})`);needle.style.transform=`rotate(${ang.toFixed(1)}deg)`;
     const a=clamp(Math.round(p*(N-1)),0,N-1),showing=p>.02||a>0;
@@ -710,21 +718,26 @@ const STOPS=[
       cardEls.forEach((c,i)=>c.classList.toggle('on',i===idx));
       pEls.forEach((d,i)=>{d.classList.toggle('on',i===idx);d.classList.toggle('done',i<idx)});
       jtxt.textContent=idx<0?'scroll to start':STOPS[idx].l;}
-    dotEls.forEach((d,i)=>{const on=p>=frac(i)-.005;d.classList.toggle('on',on);d.firstElementChild.classList.toggle('on',on);});
+    const lit=dotEls.reduce((n,_,i)=>n+(p>=frac(i)-.005),0);
+    if(lit!==dotOn){dotOn=lit;dotEls.forEach((d,i)=>{const on=i<lit;d.classList.toggle('on',on);d.firstElementChild.classList.toggle('on',on)})}
   }
+  /* the camera eases toward the marker; the loop runs only while the map is on screen and still moving */
+  function kick(){if(vis&&!raf)raf=requestAnimationFrame(frame)}
   function frame(){
-    const w=stage.clientWidth,h=stage.clientHeight,mob=w<=820;
-    const s=(mob?clamp(w/700,.5,.8):clamp(w/1400,.6,1))*uz;
-    cam.x+=(tgt.x-cam.x)*.12;cam.y+=(tgt.y-cam.y)*.12;
-    const ax=mob?.5:.5,ay=mob?.36:.5;
-    world.style.transform=`translate(${w*ax-cam.x*s}px,${h*ay-cam.y*s}px) scale(${s})`;
-    requestAnimationFrame(frame);
+    raf=0;const mob=sw<=820;
+    const s=(mob?clamp(sw/700,.5,.8):clamp(sw/1400,.6,1))*uz;
+    const dx=tgt.x-cam.x,dy=tgt.y-cam.y,done=Math.abs(dx)<.3&&Math.abs(dy)<.3;
+    if(done){cam.x=tgt.x;cam.y=tgt.y}else{cam.x+=dx*.12;cam.y+=dy*.12}
+    const ay=mob?.36:.5,t=`translate(${(sw*.5-cam.x*s).toFixed(1)}px,${(sh*ay-cam.y*s).toFixed(1)}px) scale(${s.toFixed(4)})`;
+    if(t!==lastT){world.style.transform=t;lastT=t}
+    if(!done)kick();
   }
-  const zoom=f=>{uz=clamp(uz*f,.55,1.7);sfx('click')};
+  const zoom=f=>{uz=clamp(uz*f,.55,1.7);sfx('click');kick()};
   document.getElementById('mIn').onclick=()=>zoom(1.2);document.getElementById('mOut').onclick=()=>zoom(1/1.2);
-  document.getElementById('mLoc').onclick=()=>{uz=1;cam={x:tgt.x,y:tgt.y};sfx('toggle')};
-  addEventListener('scroll',measure,{passive:true});addEventListener('resize',measure);
-  measure();requestAnimationFrame(frame);
+  document.getElementById('mLoc').onclick=()=>{uz=1;cam={x:tgt.x,y:tgt.y};sfx('toggle');kick()};
+  new IntersectionObserver(([e])=>{vis=e.isIntersecting;stage.classList.toggle('paused',!vis);if(vis){measure();kick()}}).observe(stage);
+  addEventListener('scroll',measure,{passive:true});addEventListener('resize',()=>{size();p=-1;measure()});
+  size();measure();vis=true;frame();vis=false;
 })();
 
 
@@ -751,7 +764,7 @@ const STOPS=[
     ctx=new AC();
     const comp=ctx.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=4;comp.attack.value=.01;comp.release.value=.25;
     master=ctx.createGain();master.gain.value=.9;master.connect(comp);comp.connect(ctx.destination);
-    verb=ctx.createConvolver();verb.buffer=impulse(2.6);const vg=ctx.createGain();vg.gain.value=.34;verb.connect(vg);vg.connect(master);
+    verb=ctx.createConvolver();const vg=ctx.createGain();vg.gain.value=.34;verb.connect(vg);vg.connect(master);
     sfxBus=ctx.createGain();sfxBus.gain.value=.75;sfxBus.connect(master);   /* dry: no echo or reverb on touch sounds */
     musicBus=ctx.createGain();musicBus.gain.value=0;
     const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2300;lp.Q.value=.4;
@@ -766,16 +779,23 @@ const STOPS=[
   let wobGain;
   function tone(bus,f,t,dur,type,vol,atk,send,detune){
     const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f,t);
-    if(wobGain&&detune)wobGain.connect(o.detune);
+    const vib=wobGain&&detune;if(vib)wobGain.connect(o.detune);
     g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(vol,t+atk);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
-    o.connect(g);g.connect(bus);if(send){const s=ctx.createGain();s.gain.value=send;g.connect(s);s.connect(echo)}
+    let s;o.connect(g);g.connect(bus);if(send){s=ctx.createGain();s.gain.value=send;g.connect(s);s.connect(echo)}
+    /* unhook finished notes so the audio graph doesn't keep growing while music plays */
+    o.onended=()=>{if(vib)try{wobGain.disconnect(o.detune)}catch(_){}g.disconnect();if(s)s.disconnect()};
     o.start(t);o.stop(t+dur+.05);return o;
   }
-  function noise(bus,t,dur,vol,freq,type){
+  const NB={};                                   /* noise bursts are generated once per length, then reused */
+  function noiseBuf(dur){
+    const k=dur.toFixed(3);if(NB[k])return NB[k];
     const n=Math.floor(ctx.sampleRate*dur),buf=ctx.createBuffer(1,n,ctx.sampleRate),d=buf.getChannelData(0);
     for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2);
-    const src=ctx.createBufferSource();src.buffer=buf;const f=ctx.createBiquadFilter();f.type=type||'bandpass';f.frequency.value=freq;const g=ctx.createGain();g.gain.value=vol;
-    src.connect(f);f.connect(g);g.connect(bus);src.start(t);
+    return NB[k]=buf;
+  }
+  function noise(bus,t,dur,vol,freq,type){
+    const src=ctx.createBufferSource();src.buffer=noiseBuf(dur);const f=ctx.createBiquadFilter();f.type=type||'bandpass';f.frequency.value=freq;const g=ctx.createGain();g.gain.value=vol;
+    src.connect(f);f.connect(g);g.connect(bus);src.onended=()=>g.disconnect();src.start(t);
   }
   /* soft electric-piano note: a warm sine with a quick bell overtone */
   function keys(f,t,dur,vol){
@@ -806,7 +826,8 @@ const STOPS=[
     crackle.connect(f);f.connect(g);g.connect(musicBus);crackle.start();
   }
   function musicStart(){
-    if(!init())return;ctx.resume();musicOn=true;next=ctx.currentTime+.15;step=0;hiss();
+    if(!init())return;if(!verb.buffer)verb.buffer=impulse(2.6);   /* reverb is built only when music starts, not on the first tap */
+    ctx.resume();musicOn=true;next=ctx.currentTime+.15;step=0;hiss();
     musicBus.gain.cancelScheduledValues(ctx.currentTime);musicBus.gain.setValueAtTime(musicBus.gain.value,ctx.currentTime);musicBus.gain.linearRampToValueAtTime(1.7,ctx.currentTime+3);
     clearInterval(timer);timer=setInterval(schedule,60);schedule();
   }
@@ -881,6 +902,7 @@ const STOPS=[
     box.setAttribute('aria-expanded',open);box.setAttribute('aria-label',open?'Close the toolbox':'Open the toolbox');
     lbl.textContent=open?'tap again to pack up':'tap me!';
   }
+  new IntersectionObserver(([e])=>gift.classList.toggle('paused',!e.isIntersecting)).observe(gift);
   box.addEventListener('click',toggle);
   box.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}});
   tools.forEach(t=>t.querySelector('.tile').addEventListener('click',e=>{const tl=e.currentTarget;tl.classList.remove('hop');void tl.offsetWidth;tl.classList.add('hop');sfx('tool',Math.floor(Math.random()*8))}));
@@ -917,24 +939,27 @@ window.__z=20;
       if(type==='circle'){const p=mk('path',{class:'dd-line',pathLength:1,d:loop(x+w/2,y+h/2+h*.03,w/2+h*.17,h/2+h*.02)});dd.appendChild(p);doodles.push({s,e,type,p})}
       if(type==='scribble'){const p=mk('path',{class:'dd-line dd-scr',pathLength:1,d:scribble(x,y+h+2,w)});dd.appendChild(p);doodles.push({s,e,type,p})}
       if(type==='stars'){
-        const g=[[x+w+8,y-4,15,0],[x+w+22,y+h*.45,9,1],[x-6,y-6,10,1]].map(a=>{const p=mk('path',{class:'dd-star'+(a[3]?' b':''),d:star,transform:`translate(${a[0]} ${a[1]}) scale(${a[2]})`});dd.appendChild(p);return p});
+        const g=[[x+w+8,y-4,15,0],[x+w+22,y+h*.45,9,1],[x-6,y-6,10,1]].map(a=>{const p=mk('path',{class:'dd-star'+(a[3]?' b':''),d:star,transform:`translate(${a[0]} ${a[1]}) scale(0)`});p._base=`translate(${a[0]} ${a[1]})`;p._sc=a[2];dd.appendChild(p);return p});
         doodles.push({s,e,type,g});
       }
     });
-    upd();
+    last=-1;upd();
   }
+  const sh=wrap.querySelector('.scrollhint'),mv=marks.map(m=>({m,a:+m.dataset.s,b:+m.dataset.e,v:''}));let last=-1;
   function upd(){
     const r=wrap.getBoundingClientRect(),range=wrap.offsetHeight-innerHeight,hp=reduce?1:clamp(-r.top/range);
-    wrap.style.setProperty('--hp',hp);
-    marks.forEach(m=>{const a=+m.dataset.s,b=+m.dataset.e;m.style.setProperty('--p',clamp((hp-a)/(b-a)).toFixed(3))});
+    if(hp===last)return;last=hp;                 /* past the hero: nothing left to animate */
+    sh.style.opacity=Math.max(0,1-hp*14).toFixed(3);
+    mv.forEach(o=>{const v=clamp((hp-o.a)/(o.b-o.a)).toFixed(3);if(v!==o.v){o.v=v;o.m.style.setProperty('--p',v)}});
     doodles.forEach(d=>{
-      const p=clamp((hp-d.s)/(d.e-d.s));
+      const p=clamp((hp-d.s)/(d.e-d.s));if(p===d.last)return;d.last=p;
       if(d.p){d.p.style.strokeDashoffset=(1-ease(p)).toFixed(3);d.p.style.opacity=p>0?1:0}
-      if(d.g)d.g.forEach((st,i)=>{const q=clamp(p*1.4-i*.2),base=st.getAttribute('transform').replace(/ scale\([^)]*\)/,''),sc=+st.dataset.sc||+(st.getAttribute('transform').match(/scale\(([^)]*)\)/)||[0,1])[1];st.dataset.sc=sc;st.setAttribute('transform',`${base} scale(${(sc*ease(q)).toFixed(2)}) rotate(${(q*90).toFixed(0)})`)});
+      if(d.g)d.g.forEach((st,i)=>{const q=clamp(p*1.4-i*.2);st.setAttribute('transform',`${st._base} scale(${(st._sc*ease(q)).toFixed(2)}) rotate(${(q*90).toFixed(0)})`)});
     });
     notes.forEach(n=>n.classList.toggle('on',hp>=+n.dataset.at));
     hint.classList.toggle('on',hp>=.3);
   }
+  new IntersectionObserver(([e])=>wrap.classList.toggle('paused',!e.isIntersecting)).observe(wrap);
   addEventListener('scroll',upd,{passive:true});addEventListener('resize',build);
   build();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(build);
   const hero=document.getElementById('hero');

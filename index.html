@@ -102,6 +102,7 @@ body,nav,.card,.cert,.btn,.photo,.board,.tabs{transition-property:background-col
 .dd-star{fill:#F2555D}
 .dd-star.b{fill:var(--sky)}
 .scrollhint{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;bottom:26px;font:700 19px/1 Gaegu,serif;color:var(--link);display:flex;align-items:center;gap:8px}
+@media(max-width:820px){.scrollhint{bottom:84px}}  /* phones: sit above the floating sound/music buttons */
 .scrollhint i{display:block;width:2px;height:28px;background:var(--link);animation:drop 1.6s ease-in-out infinite;transform-origin:top}
 @keyframes drop{0%{transform:scaleY(0)}60%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
 /* notes: they appear one by one as you scroll, then you can drag them */
